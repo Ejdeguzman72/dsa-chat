@@ -1,12 +1,15 @@
-package main.java.com.dsa.chat.repository;
+package com.dsa.chat.repository;
+
+import com.dsa.chat.domain.UserSearchResponse;
+import com.dsa.chat.entity.DsaUser;
 
 import java.util.List;
 
 public interface DsaUserRepository {
-    List<DsaUserRepository> retrieveAllUsers();
-    com.dsa.chat.domain.UserSearchResponse retrieveUserById(long userId);
-    com.dsa.chat.domain.UserSearchResponse retrieveUserByUsername(String username);
-    int registerNewDsaUser(com.dsa.chat.entity.DsaUser request);
-    int updateDsaUser(com.dsa.chat.entity.DsaUser request);
+    List<DsaUser> retrieveAllUsers();
+    DsaUser retrieveUserById(long userId);
+    DsaUser retrieveUserByUsername(String username);
+    int registerNewDsaUser(DsaUser request);
+    int updateDsaUser(DsaUser request);
     int deleteDsaUser(long userId);
 }
