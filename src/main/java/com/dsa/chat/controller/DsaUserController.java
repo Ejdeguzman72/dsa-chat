@@ -30,7 +30,7 @@ public class DsaUserController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
     @GetMapping(value = UriConstants.GET_USER_BY_ID)
     @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
-    public UserListResponse retrieveAllDsaUsers() {
+    public UserListResponse retrieveUserById(@PathVariable long userId) {
         return dsaUserService.retrieveAllUsers();
     }
 }
