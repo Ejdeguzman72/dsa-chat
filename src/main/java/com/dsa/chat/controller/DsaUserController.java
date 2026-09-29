@@ -3,8 +3,11 @@ package com.dsa.chat.controller;
 import com.dsa.chat.domain.*;
 import com.dsa.chat.entity.DsaUser;
 import com.dsa.chat.service.DsaUserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DsaUserController {
@@ -41,17 +44,6 @@ public class DsaUserController {
     @GetMapping(value = UriConstants.GET_USER_BY_USERNAME)
     @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
     public UserSearchResponse retrieveUserByUsername(@PathVariable String username) {
-        return dsaUserService.retrieveUserByUsername(username);
-    }
-
-    @ApiOperation(value = AppConstants.API_OPERATION_REGISTER_NEW_DSA_USER)
-    @ApiResponses(value = {
-            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
-            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
-            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @PostMapping(value = UriConstants.USER_REGISTER_URI)
-    @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
-    public UserSearchResponse registerNewUser(@RequestBody DsaUser request) {
         return dsaUserService.retrieveUserByUsername(username);
     }
 
