@@ -1,14 +1,13 @@
 package com.dsa.chat.service;
 
-import com.dsa.chat.domain.RegisterRequest;
-import com.dsa.chat.domain.UserListResponse;
-import com.dsa.chat.domain.UserSearchResponse;
+import com.dsa.chat.domain.*;
 import com.dsa.chat.entity.DsaUser;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,8 +36,26 @@ public class DsaUserService {
         return response;
     }
 
-    public ResponseEntity<DsaUser> registerNewF2DUser(RegisterRequest request) {
-        return ResponseEntity.ok(null);
+    public DsaUserAddUpdateResponse updateDSAUserInfo(DsaUserAddUpdateRequest request) {
+        DsaUserAddUpdateResponse response = new DsaUserAddUpdateResponse();
+        int result = 0;
+        if (request != null) {
+            result = dsaUserRepository.updateDsaUser(request);
+            if (result > 0) {
+                DsaUser updatedUser = new DsaUser();
+                updatedUser.setUsername(request.getUsername());
+                updatedUser.setPassword(request.getPassword());
+                updatedUser.setEmail(request.getEmail());
+                updatedUser.setDescription(request.getDescription());
+                updatedUser.setFirstname(request.getFirstname());
+                updatedUser.setLastname(request.getLastname());
+                updatedUser.setInterests(request.getInterests());
+                updatedUser.setLastUpdatetime(LocalDate.now());
+
+                response.setDsaUser(updatedUser);
+            }
+        }
+        return response;
     }
 
     public UserSearchResponse deleteUserById(long userId) {

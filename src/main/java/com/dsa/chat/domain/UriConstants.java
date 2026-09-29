@@ -10,4 +10,5 @@ public class UriConstants {
     public static final String USER_AUTHENTICATE_URI = "/auth/authenticate";
     public static final String USER_REGISTER_URI = "/auth/register";
     public static final String AUTHORIZED_REQUESTS_PATH = "/auth/**";
+    public static final String UPDATE_DSA_USER_INFO = "/users/update";
 }
