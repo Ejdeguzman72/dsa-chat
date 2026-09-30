@@ -1,7 +1,6 @@
 package com.dsa.chat.service;
 
 import com.dsa.chat.domain.*;
-import com.dsa.chat.entity.DsaUser;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +20,7 @@ public class DsaUserService {
 
     public UserListResponse retrieveAllUsers() {
         UserListResponse response = new UserListResponse();
-        List<DsaUser> list = dsaUserRepository.retrieveAllUsers();
+        List<com.dsa.chat.domain.DsaUser> list = dsaUserRepository.retrieveAllUsers();
         response.setList(list);
         return response;
     }
@@ -35,8 +34,8 @@ public class DsaUserService {
 
     public UserSearchResponse retrieveUserByUsername(String username) {
         UserSearchResponse response = new UserSearchResponse();
-        DsaUser dsaUser = dsaUserRepository.retrieveUserByUsername(username);
-        response.setUser(dsaUser);
+        com.dsa.chat.entity.DsaUser authUserInfo = dsaUserRepository.retrieveUserByUsername(username);
+        response.setAuthInfo(authUserInfo);
         return response;
     }
 
@@ -73,8 +72,8 @@ public class DsaUserService {
         return response;
     }
 
-    public ResponseEntity<DsaUser> registerNewDsaUser(RegisterRequest request) {
-        DsaUser dsaUser = new DsaUser();
+    public ResponseEntity<com.dsa.chat.entity.DsaUser> registerNewDsaUser(RegisterRequest request) {
+        com.dsa.chat.entity.DsaUser dsaUser = new com.dsa.chat.entity.DsaUser();
         dsaUser.setUsername(request.getUsername());
         dsaUser.setPassword(passwordEncoder.encode(request.getPassword()));
         dsaUser.setEmail(request.getEmail());

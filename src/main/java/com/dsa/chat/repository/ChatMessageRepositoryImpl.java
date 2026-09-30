@@ -1,7 +1,7 @@
 package com.dsa.chat.repository;
 
-import com.dsa.chat.domain.ChatMessage;
 import com.dsa.chat.domain.ChatMessageSearchResponse;
+import com.dsa.chat.entity.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

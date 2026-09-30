@@ -30,8 +30,8 @@ public class DsaUserRepositoryImplTest {
 
     @Test
     public void retrieveAllUsersTest() {
-        List<DsaUser> expectedUsers = new ArrayList<>();
-        DsaUser testUser1 = new DsaUser();
+        List<com.dsa.chat.domain.DsaUser> expectedUsers = new ArrayList<>();
+        com.dsa.chat.domain.DsaUser testUser1 = new com.dsa.chat.domain.DsaUser();
         testUser1.setUsername("TEST USERNAME");
         testUser1.setPassword("TEST PASSWORD");
         testUser1.setEmail("TEST EMAIL");
@@ -47,7 +47,7 @@ public class DsaUserRepositoryImplTest {
                 eq(dsaUserMapper)
         )).thenReturn(expectedUsers);
 
-        List<DsaUser> actualUsers =
+        List<com.dsa.chat.domain.DsaUser> actualUsers =
                 dsaUserRepository.retrieveAllUsers();
 
         assertEquals(expectedUsers, actualUsers);
@@ -57,7 +57,7 @@ public class DsaUserRepositoryImplTest {
 
     @Test
     public void retrieveUserByIdTest() {
-        DsaUser expectedDsaUser = new DsaUser();
+        com.dsa.chat.domain.DsaUser expectedDsaUser = new com.dsa.chat.domain.DsaUser();
         expectedDsaUser.setUserId(1000);
         expectedDsaUser.setUsername("TEST USERNAME");
         expectedDsaUser.setPassword("TEST PASSWORD");
@@ -67,8 +67,8 @@ public class DsaUserRepositoryImplTest {
         expectedDsaUser.setFirstname("TEST FIRSTNAME");
         expectedDsaUser.setLastname("TEST LASTNAME");
 
-        when(jdbcTemplate.queryForObject(anyString(),eq(dsaUserMapper))).thenReturn(expectedDsaUser);
-        DsaUser actualUser = dsaUserRepository.retrieveUserById(1000);
+        when(jdbcTemplate.queryForObject(anyString(),eq(com.dsa.chat.domain.DsaUser.class))).thenReturn(expectedDsaUser);
+        com.dsa.chat.domain.DsaUser actualUser = dsaUserRepository.retrieveUserById(1000);
 
         assertEquals(expectedDsaUser,actualUser);
     }
@@ -85,7 +85,7 @@ public class DsaUserRepositoryImplTest {
         expectedDsaUser.setFirstname("TEST FIRSTNAME");
         expectedDsaUser.setLastname("TEST LASTNAME");
 
-        when(jdbcTemplate.queryForObject(anyString(),eq(dsaUserMapper))).thenReturn(expectedDsaUser);
+        when(jdbcTemplate.queryForObject(anyString(),eq(DsaUser.class))).thenReturn(expectedDsaUser);
         DsaUser actualUser = dsaUserRepository.retrieveUserByUsername("TEST USERNAME");
 
         assertEquals(expectedDsaUser,actualUser);
@@ -124,11 +124,11 @@ public class DsaUserRepositoryImplTest {
     public void updateDsaUserTest() {
 
         // Arrange - existing user returned from database
-        DsaUser existingUser = new DsaUser();
+        com.dsa.chat.domain.DsaUser existingUser = new com.dsa.chat.domain.DsaUser();
         existingUser.setUserId(1000);
 
         // Arrange - updated information coming from request
-        DsaUser request = new DsaUser();
+        com.dsa.chat.domain.DsaUser request = new com.dsa.chat.domain.DsaUser();
         request.setUserId(1000);
         request.setUsername("UPDATED USERNAME");
         request.setPassword("UPDATED PASSWORD");
