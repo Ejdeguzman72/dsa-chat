@@ -2,36 +2,23 @@ package com.dsa.chat.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
-@Table(name = "chat_message")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @CrossOrigin
-public class ChatMessage {
+public class ChatMessageAddUpdateRequest {
 
-    long chatMessageId;
-    String sender;
-    String content;
-    LocalDateTime sentDatetime;
+    private String sender;
+    private String content;
+    private LocalDateTime sentDatetime;
+    private UUID chatGroupId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_message_id")
-    public long getChatMessageId() {
-        return chatMessageId;
-    }
+    // Getters and Setters
 
-    public void setChatMessageId(long chatMessageId) {
-        this.chatMessageId = chatMessageId;
-    }
-
-    @Column(name = "sender")
     public String getSender() {
         return sender;
     }
@@ -40,7 +27,6 @@ public class ChatMessage {
         this.sender = sender;
     }
 
-    @Column(name = "content")
     public String getContent() {
         return content;
     }
@@ -49,12 +35,19 @@ public class ChatMessage {
         this.content = content;
     }
 
-    @Column(name = "sent_datetime")
     public LocalDateTime getSentDatetime() {
         return sentDatetime;
     }
 
     public void setSentDatetime(LocalDateTime sentDatetime) {
         this.sentDatetime = sentDatetime;
+    }
+
+    public UUID getChatGroupId() {
+        return chatGroupId;
+    }
+
+    public void setChatGroupId(UUID chatGroupId) {
+        this.chatGroupId = chatGroupId;
     }
 }
