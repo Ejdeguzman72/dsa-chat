@@ -1,7 +1,6 @@
 package com.dsa.chat.repository;
 
-
-import com.dsa.chat.domain.DsaUser;
+import com.dsa.chat.entity.DsaUser;
 
 import java.util.List;
 

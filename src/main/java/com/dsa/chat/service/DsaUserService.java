@@ -1,9 +1,9 @@
 package com.dsa.chat.service;
 
 import com.dsa.chat.domain.*;
+import com.dsa.chat.entity.DsaUser;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class DsaUserService {
 
     public UserListResponse retrieveAllUsers() {
         UserListResponse response = new UserListResponse();
-        List<com.dsa.chat.domain.DsaUser> list = dsaUserRepository.retrieveAllUsers();
+        List<DsaUser> list = dsaUserRepository.retrieveAllUsers();
         response.setList(list);
         return response;
     }

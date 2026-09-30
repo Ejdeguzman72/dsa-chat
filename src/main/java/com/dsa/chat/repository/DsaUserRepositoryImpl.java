@@ -1,7 +1,7 @@
 package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.DSAUserMapper;
-import com.dsa.chat.domain.DsaUser;
+import com.dsa.chat.entity.DsaUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +41,15 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     }
 
     @Override
-    public com.dsa.chat.entity.DsaUser retrieveUserByUsername(String username) {
-        com.dsa.chat.entity.DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_USERNAME, com.dsa.chat.entity.DsaUser.class,username);
+    public DsaUser retrieveUserByUsername(String username) {
+        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_USERNAME, dsaUserMapper,username);
         LOGGER.info("Retrieving user with username: " + username);
 
         return dsaUser;
     }
 
     @Override
-    public int registerNewDsaUser(com.dsa.chat.entity.DsaUser request) {
+    public int registerNewDsaUser(DsaUser request) {
         int result = 0;
         if (request != null) {
            result = jdbcTemplate.update(REGISTER_NEW_DSA_USER,new Object[] {

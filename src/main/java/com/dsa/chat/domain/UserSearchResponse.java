@@ -1,5 +1,6 @@
 package com.dsa.chat.domain;
 
+import com.dsa.chat.entity.DsaUser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
