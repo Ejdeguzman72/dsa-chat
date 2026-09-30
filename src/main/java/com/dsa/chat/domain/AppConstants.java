@@ -13,6 +13,8 @@ public class AppConstants {
     public static final int API_RESPONSE_HTTP_STATUS_OK = 200;
     public static final int API_RESPONSE_HTTP_STATUS_INVALID = 400;
     public static final int API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR = 200;
+    public static final String API_OPERATION_AUTHENTICATE_USERS = "AUTHENTICATE_USERS";
+    public static final String API_OPERATION_REGISTER_NEW_USER = "REGISTER_NEW_USERS";
     public static final String API_OPERATION_GET_ALL_DSA_USERS = "GET_ALL_DSA_USERS";
     public static final String API_OPERATION_GET_DSA_USER_BY_ID = "GET_DSA_USER_BY_ID";
     public static final String API_OPERATION_GET_DSA_USER_BY_USERNAME = "GET_DSA_USER_BY_USERNAME";

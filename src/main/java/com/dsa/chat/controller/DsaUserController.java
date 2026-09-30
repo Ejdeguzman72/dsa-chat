@@ -26,6 +26,11 @@ public class DsaUserController {
     private JwtUtil jwtUtil;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @ApiOperation(value = AppConstants.API_OPERATION_AUTHENTICATE_USERS)
+    @ApiResponses(value = {
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
     @PostMapping(UriConstants.USER_AUTHENTICATE_URI)
     @CrossOrigin(origins = "*")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
@@ -42,6 +47,11 @@ public class DsaUserController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+    @ApiOperation(value = AppConstants.API_OPERATION_REGISTER_NEW_USER)
+    @ApiResponses(value = {
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
     @PostMapping(UriConstants.USER_REGISTER_URI)
     @CrossOrigin(origins = "*")
     public ResponseEntity<DsaUser> registerUser(@RequestBody RegisterRequest request) {
