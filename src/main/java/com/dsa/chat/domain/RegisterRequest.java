@@ -8,8 +8,8 @@ public class RegisterRequest {
     String firstname;
     String lastname;
     String email;
-    private String description;
-    private List<String> interests;
+    String description;
+    List<String> interests;
 
     public String getUsername() {
         return username;

@@ -34,7 +34,7 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF protection for stateless authentication
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Apply the custom CORS configuration
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(UriConstants.AUTHORIZED_REQUESTS_PATH).permitAll()  // Allow unauthenticated access to specific paths like '/auth/authenticate'
+                        .requestMatchers(UriConstants.AUTHORIZED_REQUESTS_PATH,"/**").permitAll()  // Allow unauthenticated access to specific paths like '/auth/authenticate'
                         .anyRequest().authenticated()  // Require authentication for all other requests
                 )
                 .sessionManagement(session -> session

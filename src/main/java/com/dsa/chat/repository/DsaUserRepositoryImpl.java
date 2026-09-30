@@ -21,7 +21,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     public static final String RETRIEVE_ALL_USERS = "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME FROM DSA_USER";
     public static final String RETRIEVE_USER_BY_ID = "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME FROM DSA_USER WHERE USER_ID = ?";
     public static final String RETRIEVE_USER_BY_USERNAME = "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME FROM DSA_USER WHERE USERNAME = ?";
-    public static final String REGISTER_NEW_DSA_USER = "INSERT INTO DSA_USER (USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME) INTO DSA_USER VALUES(?,?,?,?,?,?,?,?,?)";
+    public static final String REGISTER_NEW_DSA_USER = "INSERT INTO DSA_USER (USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME) VALUES(?,?,?,?,?,?,?,?,?)";
     public static final String UPDATE_DSA_USER_INFO = "UPDATE DSA_USER SET USERNAME = ?,PASSWORD = ?,EMAIL = ?,FIRSTNAME = ?,LASTNAME = ?,DESCRIPTION = ?,INTERESTS = ?,CREATION_DATE = ?,LAST_UPDATETIME = ? WHERE USER_ID = ?";
     public static final String DELETE_DSA_USER = "DELETE FROM DSA_USER WHERE USER_ID = ?";
 
@@ -43,7 +43,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
 
     @Override
     public DsaUser retrieveUserByUsername(String username) {
-        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_USERNAME,dsaUserMapper);
+        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_USERNAME,dsaUserMapper,username);
         LOGGER.info("Retrieving user with username: " + username);
 
         return dsaUser;
@@ -57,9 +57,10 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
                    request.getUsername(),
                    request.getPassword(),
                    request.getEmail(),
-                   request.getDescription(),
                    request.getFirstname(),
                    request.getLastname(),
+                   request.getDescription(),
+                   request.getInterests(),
                    LocalDate.now(),
                    LocalDate.now()
             });

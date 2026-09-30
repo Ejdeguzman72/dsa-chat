@@ -4,7 +4,9 @@ import com.dsa.chat.domain.*;
 import com.dsa.chat.entity.DsaUser;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,6 +16,8 @@ import java.util.List;
 public class DsaUserService {
     @Autowired
     private DsaUserRepositoryImpl dsaUserRepository;
+    @Autowired
+    public PasswordEncoder passwordEncoder;
 
     public UserListResponse retrieveAllUsers() {
         UserListResponse response = new UserListResponse();
@@ -67,5 +71,21 @@ public class DsaUserService {
 
         response.setUser(dsaUser);
         return response;
+    }
+
+    public ResponseEntity<DsaUser> registerNewDsaUser(RegisterRequest request) {
+        DsaUser dsaUser = new DsaUser();
+        dsaUser.setUsername(request.getUsername());
+        dsaUser.setPassword(passwordEncoder.encode(request.getPassword()));
+        dsaUser.setEmail(request.getEmail());
+        dsaUser.setFirstname(request.getFirstname());
+        dsaUser.setLastname(request.getLastname());
+        dsaUser.setDescription(request.getDescription());
+        dsaUser.setInterests(request.getInterests());
+        dsaUser.setCreationDate(LocalDate.now());
+        dsaUser.setLastUpdatetime(LocalDate.now());
+
+        dsaUserRepository.registerNewDsaUser(dsaUser);
+        return ResponseEntity.ok(dsaUser);
     }
 }

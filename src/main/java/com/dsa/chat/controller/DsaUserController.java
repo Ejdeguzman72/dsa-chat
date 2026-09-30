@@ -1,19 +1,52 @@
 package com.dsa.chat.controller;
 
+import com.dsa.chat.config.JwtUtil;
 import com.dsa.chat.domain.*;
 import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.service.DSAUserDetailsService;
 import com.dsa.chat.service.DsaUserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class DsaUserController {
     @Autowired
     private DsaUserService dsaUserService;
+    @Autowired
+    private DSAUserDetailsService dsaUserDetailsService;
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @PostMapping(UriConstants.USER_AUTHENTICATE_URI)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+            );
+        } catch (BadCredentialsException e) {
+            throw new Exception("Incorrect username or password", e);
+        }
 
+        final UserDetails userDetails = dsaUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    }
+    @PostMapping(UriConstants.USER_REGISTER_URI)
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<DsaUser> registerUser(@RequestBody RegisterRequest request) {
+        return dsaUserService.registerNewDsaUser(request);
+    }
     @ApiOperation(value = AppConstants.API_OPERATION_GET_ALL_DSA_USERS)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),

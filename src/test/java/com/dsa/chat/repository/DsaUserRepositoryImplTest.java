@@ -17,7 +17,7 @@ import java.util.List;
 import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DsaUserRepositoryImplTest {
@@ -122,31 +122,60 @@ public class DsaUserRepositoryImplTest {
 
     @Test
     public void updateDsaUserTest() {
-        DsaUser dsaUser = new DsaUser();
-        dsaUser.setUsername("TEST USERNAME 1");
-        dsaUser.setPassword("TEST PASSWORD");
-        dsaUser.setEmail("TEST EMAIL");
-        dsaUser.setDescription("TEST DESCRIPTION");
-        dsaUser.setInterests(List.of());
-        dsaUser.setFirstname("TEST FIRSTNAME");
-        dsaUser.setLastname("TEST LASTNAME");
 
-        int expected = 1;
+        // Arrange - existing user returned from database
+        DsaUser existingUser = new DsaUser();
+        existingUser.setUserId(1000);
 
+        // Arrange - updated information coming from request
+        DsaUser request = new DsaUser();
+        request.setUserId(1000);
+        request.setUsername("UPDATED USERNAME");
+        request.setPassword("UPDATED PASSWORD");
+        request.setEmail("UPDATED EMAIL");
+        request.setFirstname("UPDATED FIRSTNAME");
+        request.setLastname("UPDATED LASTNAME");
+        request.setDescription("UPDATED DESCRIPTION");
+        request.setInterests(List.of());
+
+        // Mock retrieving the existing user
+        when(jdbcTemplate.queryForObject(
+                anyString(),
+                eq(dsaUserMapper)
+        )).thenReturn(existingUser);
+
+        // Mock successful database update
         when(jdbcTemplate.update(
                 anyString(),
-                eq("TEST USERNAME 1"),
-                eq("TEST PASSWORD"),
-                eq("TEST EMAIL"),
-                eq("TEST DESCRIPTION"),
-                eq("TEST FIRSTNAME"),
-                eq("TEST LASTNAME"),
-                eq(LocalDate.now()),
-                eq(LocalDate.now())
+        eq("UPDATED USERNAME"),
+        eq("UPDATED PASSWORD"),
+        eq("UPDATED EMAIL"), eq("UPDATED FIRSTNAME"), eq("UPDATED LASTNAME"),
+        eq("UPDATED DESCRIPTION"),
+                eq(List.of()), eq(1000)
         )).thenReturn(1);
 
-        int result = dsaUserRepository.updateDsaUser(dsaUser);
-        assertEquals(expected,result);
+        // Act
+        int result = dsaUserRepository.updateDsaUser(request);
+
+        // Assert
+        assertEquals(1, result);
+
+        assertEquals("UPDATED USERNAME", existingUser.getUsername());
+        assertEquals("UPDATED PASSWORD", existingUser.getPassword());
+        assertEquals("UPDATED EMAIL", existingUser.getEmail());
+        assertEquals("UPDATED FIRSTNAME", existingUser.getFirstname());
+        assertEquals("UPDATED LASTNAME", existingUser.getLastname());
+        assertEquals("UPDATED DESCRIPTION", existingUser.getDescription());
+        assertEquals(List.of(), existingUser.getInterests());
+        assertEquals(1000L, existingUser.getUserId());
+
+        // Verify queryForObject was called
+        verify(jdbcTemplate, times(1)).queryForObject(
+                anyString(),
+                eq(dsaUserMapper)
+        );
+
+
     }
 
     @Test
