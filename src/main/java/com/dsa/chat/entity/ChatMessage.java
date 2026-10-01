@@ -1,9 +1,9 @@
 package com.dsa.chat.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity

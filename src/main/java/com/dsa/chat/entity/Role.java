@@ -2,7 +2,8 @@ package com.dsa.chat.entity;
 
 import com.dsa.chat.domain.AppConstants;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = AppConstants.ROLE_TABLE_NAME)

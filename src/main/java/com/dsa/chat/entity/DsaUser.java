@@ -2,11 +2,11 @@ package com.dsa.chat.entity;
 
 import com.dsa.chat.domain.AppConstants;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
