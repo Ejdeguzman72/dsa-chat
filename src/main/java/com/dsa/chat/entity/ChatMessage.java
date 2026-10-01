@@ -1,13 +1,10 @@
 package com.dsa.chat.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "chat_message")
@@ -15,7 +12,6 @@ import java.util.UUID;
 @CrossOrigin
 public class ChatMessage {
     long chatMessageId;
-    String sender;
     String content;
     LocalDateTime sentDatetime;
     DsaUser dsaUser;
@@ -29,15 +25,6 @@ public class ChatMessage {
 
     public void setChatMessageId(long chatMessageId) {
         this.chatMessageId = chatMessageId;
-    }
-
-    @Column(name = "sender")
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
     }
 
     @Column(name = "content")

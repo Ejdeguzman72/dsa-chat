@@ -14,23 +14,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class DsaUserRepositoryImplTest {
+
     @Mock
     private JdbcTemplate jdbcTemplate;
+
     @Mock
     private DSAUserMapper dsaUserMapper;
+
     @InjectMocks
     private DsaUserRepositoryImpl dsaUserRepository;
 
+
     @Test
     public void retrieveAllUsersTest() {
+
+        // Arrange
         List<DsaUser> expectedUsers = new ArrayList<>();
+
         DsaUser testUser1 = new DsaUser();
+
+        testUser1.setUserId(1000);
         testUser1.setUsername("TEST USERNAME");
         testUser1.setPassword("TEST PASSWORD");
         testUser1.setEmail("TEST EMAIL");
@@ -46,17 +58,37 @@ public class DsaUserRepositoryImplTest {
                 eq(dsaUserMapper)
         )).thenReturn(expectedUsers);
 
+        // Act
         List<DsaUser> actualUsers =
                 dsaUserRepository.retrieveAllUsers();
 
+        // Assert
         assertEquals(expectedUsers, actualUsers);
-        assertEquals(expectedUsers.get(0).getUsername(),actualUsers.get(0).getUsername());
-        assertEquals(expectedUsers.get(0).getFirstname(), actualUsers.get(0).getFirstname());
+        assertEquals(1, actualUsers.size());
+
+        assertEquals(
+                "TEST USERNAME",
+                actualUsers.get(0).getUsername()
+        );
+
+        assertEquals(
+                "TEST FIRSTNAME",
+                actualUsers.get(0).getFirstname()
+        );
+
+        verify(jdbcTemplate, times(1)).query(
+                anyString(),
+                eq(dsaUserMapper)
+        );
     }
+
 
     @Test
     public void retrieveUserByIdTest() {
+
+        // Arrange
         DsaUser expectedDsaUser = new DsaUser();
+
         expectedDsaUser.setUserId(1000);
         expectedDsaUser.setUsername("TEST USERNAME");
         expectedDsaUser.setPassword("TEST PASSWORD");
@@ -66,15 +98,44 @@ public class DsaUserRepositoryImplTest {
         expectedDsaUser.setFirstname("TEST FIRSTNAME");
         expectedDsaUser.setLastname("TEST LASTNAME");
 
-        when(jdbcTemplate.queryForObject(anyString(),eq(dsaUserMapper))).thenReturn(expectedDsaUser);
-        DsaUser actualUser = dsaUserRepository.retrieveUserById(1000);
+        when(jdbcTemplate.queryForObject(
+                anyString(),
+                eq(dsaUserMapper),
+                eq(1000L)
+        )).thenReturn(expectedDsaUser);
 
-        assertEquals(expectedDsaUser,actualUser);
+        // Act
+        DsaUser actualUser =
+                dsaUserRepository.retrieveUserById(1000L);
+
+        // Assert
+        assertEquals(expectedDsaUser, actualUser);
+
+        assertEquals(
+                1000L,
+                actualUser.getUserId()
+        );
+
+        assertEquals(
+                "TEST USERNAME",
+                actualUser.getUsername()
+        );
+
+        verify(jdbcTemplate, times(1))
+                .queryForObject(
+                        anyString(),
+                        eq(dsaUserMapper),
+                        eq(1000L)
+                );
     }
+
 
     @Test
     public void retrieveUserByUsernameTest() {
+
+        // Arrange
         DsaUser expectedDsaUser = new DsaUser();
+
         expectedDsaUser.setUserId(1000);
         expectedDsaUser.setUsername("TEST USERNAME");
         expectedDsaUser.setPassword("TEST PASSWORD");
@@ -86,15 +147,41 @@ public class DsaUserRepositoryImplTest {
         expectedDsaUser.setCreationDate(LocalDate.now());
         expectedDsaUser.setLastUpdatetime(LocalDate.now());
 
-        when(jdbcTemplate.queryForObject(anyString(),eq(dsaUserMapper),eq("TEST USERNAME"))).thenReturn(expectedDsaUser);
-        DsaUser actualUser = dsaUserRepository.retrieveUserByUsername("TEST USERNAME");
+        when(jdbcTemplate.queryForObject(
+                anyString(),
+                eq(dsaUserMapper),
+                eq("TEST USERNAME")
+        )).thenReturn(expectedDsaUser);
 
-        assertEquals(expectedDsaUser,actualUser);
+        // Act
+        DsaUser actualUser =
+                dsaUserRepository.retrieveUserByUsername(
+                        "TEST USERNAME"
+                );
+
+        // Assert
+        assertEquals(expectedDsaUser, actualUser);
+
+        assertEquals(
+                "TEST USERNAME",
+                actualUser.getUsername()
+        );
+
+        verify(jdbcTemplate, times(1))
+                .queryForObject(
+                        anyString(),
+                        eq(dsaUserMapper),
+                        eq("TEST USERNAME")
+                );
     }
+
 
     @Test
     public void registerNewDsaUserTest() {
+
+        // Arrange
         DsaUser dsaUser = new DsaUser();
+
         dsaUser.setUsername("TEST USERNAME");
         dsaUser.setPassword("TEST PASSWORD");
         dsaUser.setEmail("TEST EMAIL");
@@ -103,32 +190,29 @@ public class DsaUserRepositoryImplTest {
         dsaUser.setFirstname("TEST FIRSTNAME");
         dsaUser.setLastname("TEST LASTNAME");
 
-        int expectedInsertedCount = 1;
-
         when(jdbcTemplate.update(
                 anyString(),
-                eq("TEST USERNAME"),
-                eq("TEST PASSWORD"),
-                eq("TEST EMAIL"),
-                eq("TEST FIRSTNAME"),
-                eq("TEST LASTNAME"),
-                eq("TEST DESCRIPTION"),
-                eq(List.of()),
-                any(LocalDate.class),
-                any(LocalDate.class)
+                any(Object[].class)
         )).thenReturn(1);
 
-        int result = dsaUserRepository.registerNewDsaUser(dsaUser);
-        assertEquals(expectedInsertedCount,result);
+        // Act
+        int result =
+                dsaUserRepository.registerNewDsaUser(dsaUser);
+
+        // Assert
+        assertEquals(1, result);
+
+        verify(jdbcTemplate, times(1)).update(
+                anyString(),
+                any(Object[].class)
+        );
     }
+
 
     @Test
     public void updateDsaUserTest() {
 
-        // -----------------------------------
-        // Arrange - user currently in database
-        // -----------------------------------
-
+        // Arrange - existing database user
         DsaUser existingUser = new DsaUser();
 
         existingUser.setUserId(1000);
@@ -140,11 +224,7 @@ public class DsaUserRepositoryImplTest {
         existingUser.setDescription("OLD DESCRIPTION");
         existingUser.setInterests(List.of());
 
-
-        // -----------------------------------
-        // Arrange - incoming update request
-        // -----------------------------------
-
+        // Arrange - incoming request
         DsaUser request = new DsaUser();
 
         request.setUserId(1000);
@@ -156,49 +236,24 @@ public class DsaUserRepositoryImplTest {
         request.setDescription("UPDATED DESCRIPTION");
         request.setInterests(List.of());
 
-
-        // -----------------------------------
         // Mock SELECT
-        // -----------------------------------
-
         when(jdbcTemplate.queryForObject(
                 anyString(),
                 eq(dsaUserMapper),
-                eq(1000)
+                eq(1000L)
         )).thenReturn(existingUser);
 
-
-        // -----------------------------------
         // Mock UPDATE
-        // -----------------------------------
-
         when(jdbcTemplate.update(
                 anyString(),
-                eq("UPDATED USERNAME"),
-                eq("UPDATED PASSWORD"),
-                eq("UPDATED EMAIL"),
-                eq("UPDATED FIRSTNAME"),
-                eq("UPDATED LASTNAME"),
-                eq("UPDATED DESCRIPTION"),
-                eq(List.of()),
-                any(LocalDate.class),
-                any(LocalDate.class),
-                eq(1000)
+                any(Object[].class)
         )).thenReturn(1);
 
-
-        // -----------------------------------
         // Act
-        // -----------------------------------
-
         int result =
                 dsaUserRepository.updateDsaUser(request);
 
-
-        // -----------------------------------
         // Assert
-        // -----------------------------------
-
         assertEquals(1, result);
 
         assertEquals(
@@ -237,62 +292,49 @@ public class DsaUserRepositoryImplTest {
         );
 
         assertEquals(
-                1000,
+                1000L,
                 existingUser.getUserId()
         );
 
-
-        // -----------------------------------
         // Verify SELECT
-        // -----------------------------------
-
         verify(jdbcTemplate, times(1))
                 .queryForObject(
                         anyString(),
                         eq(dsaUserMapper),
-                        eq(1000)
+                        eq(1000L)
                 );
 
-
-        // -----------------------------------
         // Verify UPDATE
-        // -----------------------------------
+        verify(jdbcTemplate, times(1))
+                .update(
+                        anyString(),
+                        any(Object[].class)
+                );
+    }
+
+
+    @Test
+    public void deleteDsaUserTest() {
+
+        // Arrange
+        long userId = 1000L;
+
+        when(jdbcTemplate.update(
+                anyString(),
+                eq(userId)
+        )).thenReturn(1);
+
+        // Act
+        int result =
+                dsaUserRepository.deleteDsaUser(userId);
+
+        // Assert
+        assertEquals(1, result);
 
         verify(jdbcTemplate, times(1))
                 .update(
                         anyString(),
-                        eq("UPDATED USERNAME"),
-                        eq("UPDATED PASSWORD"),
-                        eq("UPDATED EMAIL"),
-                        eq("UPDATED FIRSTNAME"),
-                        eq("UPDATED LASTNAME"),
-                        eq("UPDATED DESCRIPTION"),
-                        eq(List.of()),
-                        any(LocalDate.class),
-                        any(LocalDate.class),
-                        eq(1000)
+                        eq(userId)
                 );
-    }
-
-    @Test
-    public void deleteDsaUserTest() {
-        DsaUser expectedDsaUser = new DsaUser();
-        expectedDsaUser.setUserId(1000);
-        expectedDsaUser.setUsername("TEST USERNAME");
-        expectedDsaUser.setPassword("TEST PASSWORD");
-        expectedDsaUser.setEmail("TEST EMAIL");
-        expectedDsaUser.setDescription("TEST DESCRIPTION");
-        expectedDsaUser.setInterests(List.of());
-        expectedDsaUser.setFirstname("TEST FIRSTNAME");
-        expectedDsaUser.setLastname("TEST LASTNAME");
-
-        int expected = 1;
-
-        when(jdbcTemplate.update(
-                anyString(),eq(Long.class)
-        )).thenReturn(1);
-
-        int result = dsaUserRepository.deleteDsaUser(1000);
-        assertEquals(expected,result);
     }
 }

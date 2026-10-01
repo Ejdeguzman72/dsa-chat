@@ -1,10 +1,12 @@
 package com.dsa.chat.entity;
 
 import com.dsa.chat.domain.AppConstants;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = AppConstants.ROLE_TABLE_NAME)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

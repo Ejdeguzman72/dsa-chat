@@ -1,6 +1,7 @@
 package com.dsa.chat.entity;
 
 import com.dsa.chat.domain.AppConstants;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = AppConstants.USERS_TABLE_NAME)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DsaUser implements UserDetails {
 
     @Id
