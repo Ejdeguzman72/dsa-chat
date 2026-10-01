@@ -62,10 +62,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
 
     @Override
     public List<DsaUser> retrieveAllUsers() {
-        List<DsaUser> list = jdbcTemplate.query(
-                RETRIEVE_ALL_USERS,
-                dsaUserMapper
-        );
+        List<DsaUser> list = jdbcTemplate.query(RETRIEVE_ALL_USERS, dsaUserMapper);
         LOGGER.info("Retrieving all user information...");
         return list;
     }
@@ -73,11 +70,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
 
     @Override
     public DsaUser retrieveUserById(long userId) {
-        DsaUser dsaUser = jdbcTemplate.queryForObject(
-                RETRIEVE_USER_BY_ID,
-                dsaUserMapper,
-                userId
-        );
+        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_ID, dsaUserMapper, userId);
         LOGGER.info("Retrieving user with ID: {}", userId);
 
         return dsaUser;
@@ -86,15 +79,8 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
 
     @Override
     public DsaUser retrieveUserByUsername(String username) {
-        DsaUser dsaUser = jdbcTemplate.queryForObject(
-                RETRIEVE_USER_BY_USERNAME,
-                dsaUserMapper,
-                username
-        );
-        LOGGER.info(
-                "Retrieving user with username: {}",
-                username
-        );
+        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_USERNAME, dsaUserMapper, username);
+        LOGGER.info("Retrieving user with username: {}", username);
         return dsaUser;
     }
 
@@ -102,9 +88,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     public int registerNewDsaUser(DsaUser request) {
         int result = 0;
         if (request != null) {
-            result = jdbcTemplate.update(
-                    REGISTER_NEW_DSA_USER,
-                    new Object[]{
+            result = jdbcTemplate.update(REGISTER_NEW_DSA_USER, new Object[]{
                             request.getUsername(),
                             request.getPassword(),
                             request.getEmail(),
@@ -124,11 +108,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     @Override
     public int updateDsaUser(DsaUser request) {
         int result = 0;
-        DsaUser dsaUser = jdbcTemplate.queryForObject(
-                RETRIEVE_USER_BY_ID,
-                dsaUserMapper,
-                request.getUserId()
-        );
+        DsaUser dsaUser = jdbcTemplate.queryForObject(RETRIEVE_USER_BY_ID, dsaUserMapper, request.getUserId());
 
         if (dsaUser != null) {
             dsaUser.setUsername(request.getUsername());
@@ -170,10 +150,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     public int deleteDsaUser(long userId) {
         int result = 0;
         if (userId > 0) {
-            result = jdbcTemplate.update(
-                    DELETE_DSA_USER,
-                    userId
-            );
+            result = jdbcTemplate.update(DELETE_DSA_USER, userId);
         }
         return result;
     }

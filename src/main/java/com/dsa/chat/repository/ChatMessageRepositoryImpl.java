@@ -8,6 +8,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
     public static final String GET_ALL_MESSAGES_BY_USER_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE USER_ID = ?";
     public static final String GET_MESSAGE_BY_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE CHAT_MESSAGE_ID = ?";
     public static final String ADD_NEW_CHAT_MSG = "INSERT INTO CHAT_MESSAGE(CONTENT, SENT_DATETIME, USER_ID) VALUES (?,?,?)";
+    public static final String UPDATE_CHAT_MESSAGE = "UPDATE CHAT_MESSAGE SET CONTENT = ?, SENT_DATETIME = ? WHERE USER_ID = ?";
+    public static final String DELETE_CHAT_MESSAGE = "DELETE FROM CHAT_MESSAGE WHERE USER_ID = ?";
     @Override
     public List<ChatMessage> retrieveAllMessages() {
         List<ChatMessage> list = new ArrayList<>();
@@ -72,11 +75,31 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
 
     @Override
     public int updateMessage(ChatMessage request) {
-        return 0;
+        int result = 0;
+        if (request != null) {
+            ChatMessage chatMessage = retrieveChatMessageById(request.getChatMessageId());
+            if (chatMessage != null) {
+                ChatMessage updatedChatMessage = new ChatMessage();
+                updatedChatMessage.setChatMessageId(request.getChatMessageId());
+                updatedChatMessage.setContent(request.getContent());
+                updatedChatMessage.setSentDatetime(LocalDateTime.now());
+                result = jdbcTemplate.update(UPDATE_CHAT_MESSAGE,new Object[] {
+                        updatedChatMessage.getContent(),
+                        updatedChatMessage.getSentDatetime(),
+                        updatedChatMessage.getChatMessageId()
+                });
+            }
+        }
+        return result;
     }
 
     @Override
     public int deleteChatMessage(long chatMessageId) {
-        return 0;
+        int result = 0;
+        if (chatMessageId > 0) {
+            result = jdbcTemplate.update(DELETE_CHAT_MESSAGE,chatMessageId);
+        }
+
+        return result;
     }
 }
