@@ -24,4 +24,16 @@ public class ChatMessageController {
     public ChatMessageSearchResponse searchChatMessageById(@PathVariable long chatMessageId) {
         return chatMessageService.searchChatMessageById(chatMessageId);
     }
+    @PostMapping("/chat/save-message")
+    public ChatMessageAddUpdateResponse saveMessage(@RequestBody ChatMessageAddUpdateRequest request) {
+        return chatMessageService.sendMessage(request);
+    }
+    @PutMapping("/chat/update-message")
+    public ChatMessageAddUpdateResponse updateMessage(@RequestBody ChatMessageAddUpdateRequest request) {
+        return chatMessageService.updateMessage(request);
+    }
+    @DeleteMapping("chat/delete-message/{chatMessageId}")
+    public ChatMessageSearchResponse deleteMessage(@PathVariable long chatMessageId) {
+        return chatMessageService.deleteMessage(chatMessageId);
+    }
 }

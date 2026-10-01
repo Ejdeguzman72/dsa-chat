@@ -56,4 +56,35 @@ public class ChatMessageService {
         }
         return response;
     }
+
+    public ChatMessageAddUpdateResponse updateMessage(ChatMessageAddUpdateRequest request) {
+        ChatMessageAddUpdateResponse response = new ChatMessageAddUpdateResponse();
+        int result = 0;
+        if (request != null) {
+            ChatMessage chatMessage = new ChatMessage();
+            chatMessage.setChatMessageId(request.getChatMessageId());
+            chatMessage.setContent(request.getContent());
+            chatMessage.setSentDatetime(LocalDateTime.now());
+            chatMessage.setDsaUser(request.getDsaUser());
+            result = chatMessageRepository.updateMessage(request);
+            if (result > 0) {
+                response.setChatMessage(chatMessage);
+                response.setSuccess(true);
+            }
+        }
+
+        return response;
+    }
+
+    public ChatMessageSearchResponse deleteMessage(long chatMessageId) {
+        ChatMessageSearchResponse response = new ChatMessageSearchResponse();
+        if (chatMessageId > 0) {
+            ChatMessage chatMessage = chatMessageRepository.retrieveChatMessageById(chatMessageId);
+            chatMessageRepository.deleteChatMessage(chatMessageId);
+
+            response.setChatMessage(chatMessage);
+        }
+
+        return response;
+    }
 }
