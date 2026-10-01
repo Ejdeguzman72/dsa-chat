@@ -4,6 +4,7 @@ import com.dsa.chat.domain.ChatMessageMapper;
 import com.dsa.chat.domain.ChatMessageSearchResponse;
 import com.dsa.chat.entity.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -39,8 +40,15 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
     }
 
     @Override
-    public ChatMessageSearchResponse retrieveChatMessageById(long chatMessageId) {
-        ChatMessage chatMessage = jdbcTemplate.queryForObject()
+    public ChatMessage retrieveChatMessageById(long chatMessageId) {
+        try {
+            ChatMessage chatMessage = jdbcTemplate.queryForObject(GET_MESSAGE_BY_ID,chatMessageMapper,chatMessageId);
+            return chatMessage;
+        } catch (EmptyResultDataAccessException e) {
+            System.out.println(e);
+        }
+
+        return null;
     }
 
     @Override

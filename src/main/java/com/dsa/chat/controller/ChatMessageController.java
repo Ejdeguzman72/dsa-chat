@@ -22,6 +22,6 @@ public class ChatMessageController {
     }
     @GetMapping("/chat/search/chatMessageId/{chatMessageId}")
     public ChatMessageSearchResponse searchChatMessageById(@PathVariable long chatMessageId) {
-
+        return chatMessageService.searchChatMessageById(chatMessageId);
     }
 }

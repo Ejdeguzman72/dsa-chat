@@ -8,7 +8,7 @@ import java.util.List;
 public interface ChatMessageRepository {
     List<ChatMessage> retrieveAllMessages();
     List<ChatMessage> retrieveAllMessagesByUserId(long userId);
-    ChatMessageSearchResponse retrieveChatMessageById(long chatMessageId);
+    ChatMessage retrieveChatMessageById(long chatMessageId);
     int addNewMessage(ChatMessage request);
     int updateMessage(ChatMessage request);
     int deleteChatMessage(long chatMessageId);

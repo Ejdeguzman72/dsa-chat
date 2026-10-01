@@ -34,7 +34,11 @@ public class ChatMessageService {
     }
     public ChatMessageSearchResponse searchChatMessageById(long chatMessageId) {
         ChatMessageSearchResponse response = new ChatMessageSearchResponse();
-        ChatMessage chatMessage = chatMessageRepository
+        ChatMessage chatMessage = chatMessageRepository.retrieveChatMessageById(chatMessageId);
+
+        response.setChatMessage(chatMessage);
+        response.setSuccess(true);
+        return response;
     }
     public ChatMessageAddUpdateResponse sendMessage(ChatMessageAddUpdateRequest request) {
         ChatMessageAddUpdateResponse response = new ChatMessageAddUpdateResponse();
