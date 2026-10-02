@@ -1,6 +1,5 @@
 package com.dsa.chat.repository;
 
-import com.dsa.chat.domain.ChatMessageSearchResponse;
 import com.dsa.chat.entity.ChatMessage;
 
 import java.util.List;
