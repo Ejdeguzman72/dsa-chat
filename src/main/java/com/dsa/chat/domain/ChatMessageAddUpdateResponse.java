@@ -1,6 +1,5 @@
 package com.dsa.chat.domain;
 
-import com.dsa.chat.entity.ChatMessage;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.bind.annotation.CrossOrigin;

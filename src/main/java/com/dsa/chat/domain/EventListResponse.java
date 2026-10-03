@@ -2,33 +2,23 @@ package com.dsa.chat.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@CrossOrigin
-public class ChatMessageListResponse {
+public class EventListResponse {
 
-    List<ChatMessage> list;
-    String message;
+    List<DSAEvent> list;
     boolean isSuccess;
+    String message;
 
-    public List<ChatMessage> getList() {
+    public List<DSAEvent> getList() {
         return list;
     }
 
-    public void setList(List<ChatMessage> list) {
+    public void setList(List<DSAEvent> list) {
         this.list = list;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public boolean isSuccess() {
@@ -37,5 +27,13 @@ public class ChatMessageListResponse {
 
     public void setSuccess(boolean success) {
         isSuccess = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

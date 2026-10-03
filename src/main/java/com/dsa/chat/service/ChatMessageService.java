@@ -4,7 +4,7 @@ import com.dsa.chat.domain.ChatMessageAddUpdateRequest;
 import com.dsa.chat.domain.ChatMessageAddUpdateResponse;
 import com.dsa.chat.domain.ChatMessageListResponse;
 import com.dsa.chat.domain.ChatMessageSearchResponse;
-import com.dsa.chat.entity.ChatMessage;
+import com.dsa.chat.domain.ChatMessage;
 import com.dsa.chat.repository.ChatMessageRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

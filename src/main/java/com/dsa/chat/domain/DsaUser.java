@@ -1,28 +1,20 @@
-package com.dsa.chat.entity;
+package com.dsa.chat.domain;
 
-import com.dsa.chat.domain.AppConstants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
-@Table(name = AppConstants.USERS_TABLE_NAME)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DsaUser implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
-    @Column(nullable = false, unique = true)
+
     private String username;
-    @Column(nullable = false)
     private String password;
     private String email;
     private String firstname;
@@ -32,12 +24,6 @@ public class DsaUser implements UserDetails {
     private LocalDate creationDate;
     private LocalDate lastUpdatetime;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
     private List<Role> roles = new ArrayList<>(); // Initialize to avoid null pointer exceptions
 
     // Getters and setters

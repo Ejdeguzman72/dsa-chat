@@ -1,7 +1,7 @@
 package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.DSAUserMapper;
-import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.domain.DsaUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

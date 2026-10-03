@@ -1,7 +1,7 @@
 package com.dsa.chat.service;
 
 import com.dsa.chat.domain.*;
-import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.domain.DsaUser;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class DsaUserService {
 
     public UserSearchResponse retrieveUserByUsername(String username) {
         UserSearchResponse response = new UserSearchResponse();
-        com.dsa.chat.entity.DsaUser authUserInfo = dsaUserRepository.retrieveUserByUsername(username);
+        DsaUser authUserInfo = dsaUserRepository.retrieveUserByUsername(username);
         response.setAuthInfo(authUserInfo);
         return response;
     }
@@ -72,8 +72,8 @@ public class DsaUserService {
         return response;
     }
 
-    public ResponseEntity<com.dsa.chat.entity.DsaUser> registerNewDsaUser(RegisterRequest request) {
-        com.dsa.chat.entity.DsaUser dsaUser = new com.dsa.chat.entity.DsaUser();
+    public ResponseEntity<DsaUser> registerNewDsaUser(RegisterRequest request) {
+        DsaUser dsaUser = new DsaUser();
         dsaUser.setUsername(request.getUsername());
         dsaUser.setPassword(passwordEncoder.encode(request.getPassword()));
         dsaUser.setEmail(request.getEmail());

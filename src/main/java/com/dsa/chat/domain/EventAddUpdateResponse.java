@@ -2,23 +2,22 @@ package com.dsa.chat.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@CrossOrigin
-public class ChatMessageSearchResponse {
+public class EventAddUpdateResponse {
 
-    ChatMessage chatMessage;
+    DSAEvent event;
     String message;
     boolean isSuccess;
 
-    public ChatMessage getChatMessage() {
-        return chatMessage;
+
+    public DSAEvent getEvent() {
+        return event;
     }
 
-    public void setChatMessage(ChatMessage chatMessage) {
-        this.chatMessage = chatMessage;
+    public void setEvent(DSAEvent event) {
+        this.event = event;
     }
 
     public String getMessage() {

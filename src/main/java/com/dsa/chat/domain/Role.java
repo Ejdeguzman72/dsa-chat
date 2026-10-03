@@ -1,20 +1,12 @@
-package com.dsa.chat.entity;
+package com.dsa.chat.domain;
 
-import com.dsa.chat.domain.AppConstants;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = AppConstants.ROLE_TABLE_NAME)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
     private Long id;
 
-    @Column(name = "role")
     private String name;
 
     public Long getId() {

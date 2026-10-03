@@ -1,13 +1,10 @@
-package com.dsa.chat.entity;
+package com.dsa.chat.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "chat_message")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @CrossOrigin
 public class ChatMessage {
@@ -15,42 +12,27 @@ public class ChatMessage {
     String content;
     LocalDateTime sentDatetime;
     DsaUser dsaUser;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_message_id")
     public long getChatMessageId() {
         return chatMessageId;
     }
-
     public void setChatMessageId(long chatMessageId) {
         this.chatMessageId = chatMessageId;
     }
-
-    @Column(name = "content")
     public String getContent() {
         return content;
     }
-
     public void setContent(String content) {
         this.content = content;
     }
-
-    @Column(name = "sent_datetime")
     public LocalDateTime getSentDatetime() {
         return sentDatetime;
     }
-
     public void setSentDatetime(LocalDateTime sentDatetime) {
         this.sentDatetime = sentDatetime;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     public DsaUser getDsaUser() {
         return dsaUser;
     }
-
     public void setDsaUser(DsaUser dsaUser) {
         this.dsaUser = dsaUser;
     }

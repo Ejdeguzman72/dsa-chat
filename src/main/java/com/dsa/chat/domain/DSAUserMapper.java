@@ -1,6 +1,5 @@
 package com.dsa.chat.domain;
 
-import com.dsa.chat.entity.DsaUser;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

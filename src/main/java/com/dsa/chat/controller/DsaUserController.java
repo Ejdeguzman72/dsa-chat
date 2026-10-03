@@ -2,7 +2,7 @@ package com.dsa.chat.controller;
 
 import com.dsa.chat.config.JwtUtil;
 import com.dsa.chat.domain.*;
-import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.domain.DsaUser;
 import com.dsa.chat.service.DSAUserDetailsService;
 import com.dsa.chat.service.DsaUserService;
 import io.swagger.annotations.ApiOperation;

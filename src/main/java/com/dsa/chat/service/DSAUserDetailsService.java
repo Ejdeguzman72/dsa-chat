@@ -1,6 +1,6 @@
 package com.dsa.chat.service;
 
-import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.domain.DsaUser;
 import com.dsa.chat.repository.DsaUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

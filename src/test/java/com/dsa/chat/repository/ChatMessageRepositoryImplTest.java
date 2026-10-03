@@ -1,8 +1,8 @@
 package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.ChatMessageMapper;
-import com.dsa.chat.entity.ChatMessage;
-import com.dsa.chat.entity.DsaUser;
+import com.dsa.chat.domain.ChatMessage;
+import com.dsa.chat.domain.DsaUser;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
