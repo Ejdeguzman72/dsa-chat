@@ -11,4 +11,13 @@ public class UriConstants {
     public static final String USER_REGISTER_URI = "/auth/register";
     public static final String AUTHORIZED_REQUESTS_PATH = "/auth/**";
     public static final String UPDATE_DSA_USER_INFO = "/users/update";
+
+    public static final String GET_ALL_MESSAGES ="/chat/all";
+    public static final String GET_MESSAGES_BY_USER="/chat/all/user/{userId}";
+    public static final String GET_MESSAGE_BY_ID="/chat/search/chatMessageId/{chatMessageId}";
+    public static final String SAVE_MESSAGE_INFO="/chat/save-message";
+    public static final String UPDATE_MESSAGE_INFO="/chat/update-message";
+    public static final String DELETE_MESSAGE="/chat/delete-message/{chatMessageId}";
+
+    public static final String GET_ALL_EVENTS = "/events/all";
 }
