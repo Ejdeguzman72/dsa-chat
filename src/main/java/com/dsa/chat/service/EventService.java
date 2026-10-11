@@ -20,6 +20,7 @@ public class EventService {
         List<DSAEvent> list = eventRepository.getAllEvents();
 
         response.setList(list);
+        response.setSuccess(true);
         return response;
     }
 

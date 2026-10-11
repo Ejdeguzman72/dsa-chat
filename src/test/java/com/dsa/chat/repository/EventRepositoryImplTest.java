@@ -14,8 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -91,5 +90,79 @@ public class EventRepositoryImplTest {
         List<DSAEvent> result = eventRepository.searchEventsByType("Test Event 2 Type");
 
         assertEquals(expected,result);
+    }
+
+    @Test
+    public void searchDsaEventByNameTest() {
+        DSAEvent expected = new DSAEvent();
+        expected.setEventId(UUID.randomUUID());
+        expected.setEventDate(LocalDate.now());
+        expected.setLastUpdateTime(LocalDate.now());
+        expected.setEventName("Test Event Name");
+        expected.setDescription("This is a test description for Test Event Name");
+        expected.setEventType("Test Event Type");
+        expected.setAttendees(null);
+        expected.setConfirmedAttendees(null);
+        expected.setTentativeAttendees(null);
+        expected.setDeclinedAttendees(null);
+
+        when(jdbcTemplate.queryForObject(anyString(),eq(eventMapper),eq("Test Event Name"))).thenReturn(expected);
+
+        DSAEvent result = eventRepository.searchDsaEventByName("Test Event Name");
+
+        assertEquals(expected,result);
+    }
+
+    @Test
+    public void addNewEventTest() {
+        DSAEvent request = new DSAEvent();
+        request.setEventId(UUID.randomUUID());
+        request.setEventDate(LocalDate.now());
+        request.setLastUpdateTime(LocalDate.now());
+        request.setEventName("Test Event Name");
+        request.setDescription("This is a test description for Test Event Name");
+        request.setEventType("Test Event Type");
+        request.setAttendees(null);
+        request.setConfirmedAttendees(null);
+        request.setTentativeAttendees(null);
+        request.setDeclinedAttendees(null);
+
+        when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);
+
+        int result = eventRepository.addNewEvent(request);
+
+        assertEquals(1,result);
+    }
+
+    @Test
+    public void updateEventTest() {
+        DSAEvent request = new DSAEvent();
+        request.setEventId(UUID.randomUUID());
+        request.setEventDate(LocalDate.now());
+        request.setLastUpdateTime(LocalDate.now());
+        request.setEventName("Test Event Name");
+        request.setDescription("This is a test description for Test Event Name");
+        request.setEventType("Test Event Type");
+        request.setAttendees(null);
+        request.setConfirmedAttendees(null);
+        request.setTentativeAttendees(null);
+        request.setDeclinedAttendees(null);
+
+        when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);
+
+        int result = eventRepository.addNewEvent(request);
+
+        assertEquals(1,result);
+    }
+
+    @Test
+    public void deleteEventTest() {
+        UUID eventId = UUID.randomUUID();
+
+        when(jdbcTemplate.update(anyString(),eq(eventId))).thenReturn(1);
+
+        int result = eventRepository.deleteEvent(eventId);
+
+        assertEquals(1,result);
     }
 }
