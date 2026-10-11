@@ -26,6 +26,7 @@ public class DsaUserController {
     private JwtUtil jwtUtil;
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @ApiOperation(value = AppConstants.API_OPERATION_AUTHENTICATE_USERS)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
@@ -47,6 +48,7 @@ public class DsaUserController {
 
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
+
     @ApiOperation(value = AppConstants.API_OPERATION_REGISTER_NEW_USER)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
@@ -57,6 +59,7 @@ public class DsaUserController {
     public ResponseEntity<DsaUser> registerUser(@RequestBody RegisterRequest request) {
         return dsaUserService.registerNewDsaUser(request);
     }
+
     @ApiOperation(value = AppConstants.API_OPERATION_GET_ALL_DSA_USERS)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
