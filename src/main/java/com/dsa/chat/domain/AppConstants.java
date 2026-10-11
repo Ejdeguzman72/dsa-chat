@@ -21,4 +21,12 @@ public class AppConstants {
     public static final String API_OPERATION_REGISTER_NEW_DSA_USER = "REGISTER_NEW_DSA_USER";
     public static final String API_OPERATION_UPDATE_DSA_USER_INFO = "UPDATE_DSA_USER_INFO";
     public static final String API_OPERATION_DELETE_DSA_USER = "DELETE_DSA_USER";
+    public static final String GET_ALL_MESSAGES = "GET_ALL_MESSAGES";
+    public static final String GET_ALL_MESSAGES_BY_USER = "GET_ALL_MESSAGES_BY_USER";
+    public static final String GET_MESSAGE_BY_ID = "GET_MESSAGE_BY_ID";
+    public static final String SAVE_MESSAGE_INFO = "SAVE_MESSAGE_INFO";
+    public static final String UPDATE_MESSAGE_INFO = "UPDATE_MESSGE_INFO";
+    public static final String DELETE_MESSAGE = "DELETE_MESSAGE";
+    public static final String GET_ALL_EVENTS = "GET_ALL_EVENTS";
+    public static final String GET_ALL_EVENTS_BY_TYPE = "GET_ALL_EVENTS_BY_TYPE";
 }
