@@ -52,6 +52,5 @@ public class ChatMessageServiceTest {
 
         assertNotNull(result);
         assertEquals(expected.size(),result.getList().size());
-
     }
 }
