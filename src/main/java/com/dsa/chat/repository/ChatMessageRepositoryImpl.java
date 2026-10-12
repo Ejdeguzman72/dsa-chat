@@ -23,7 +23,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.chatMessageMapper = chatMessageMapper;
     }
-    public static final String GET_ALL_MESSAGES = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE";
+    public static final String GET_ALL_MESSAGES = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE ORDER BY SENT_DATETIME DESC";
     public static final String GET_ALL_MESSAGES_BY_USER_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE USER_ID = ?";
     public static final String GET_MESSAGE_BY_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE CHAT_MESSAGE_ID = ?";
     public static final String ADD_NEW_CHAT_MSG = "INSERT INTO CHAT_MESSAGE(CONTENT, SENT_DATETIME, USER_ID) VALUES (?,?,?)";

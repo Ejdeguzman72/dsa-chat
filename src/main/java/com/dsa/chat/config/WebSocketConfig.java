@@ -10,18 +10,23 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-    private final ChatWebSocketHandler chatWebSocketHandler;
+    private final ChatWebSocketHandler chatHandler;
+    private final JwtWebSocketInterceptor jwtInterceptor;
 
     public WebSocketConfig(
-            ChatWebSocketHandler chatWebSocketHandler) {
-        this.chatWebSocketHandler = chatWebSocketHandler;
+            ChatWebSocketHandler chatHandler,
+            JwtWebSocketInterceptor jwtInterceptor) {
+
+        this.chatHandler = chatHandler;
+        this.jwtInterceptor = jwtInterceptor;
     }
 
     @Override
     public void registerWebSocketHandlers(
             WebSocketHandlerRegistry registry) {
 
-        registry.addHandler(chatWebSocketHandler, "/chat")
+        registry.addHandler(chatHandler, "/chat")
+                .addInterceptors(jwtInterceptor)
                 .setAllowedOrigins("*");
     }
 }

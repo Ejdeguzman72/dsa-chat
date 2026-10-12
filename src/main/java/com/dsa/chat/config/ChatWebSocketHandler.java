@@ -1,6 +1,11 @@
 
 package com.dsa.chat.config;
 
+import com.dsa.chat.domain.ChatMessageAddUpdateRequest;
+import com.dsa.chat.domain.DsaUser;
+import com.dsa.chat.domain.UserSearchResponse;
+import com.dsa.chat.service.ChatMessageService;
+import com.dsa.chat.service.DsaUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,29 +15,46 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
-
+    private final ChatMessageService chatMessageService;
+    private final DsaUserService userService;
     private static final Logger LOGGER =
             LoggerFactory.getLogger(ChatWebSocketHandler.class);
 
     private final Set<WebSocketSession> sessions =
             ConcurrentHashMap.newKeySet();
 
+    public ChatWebSocketHandler(ChatMessageService chatMessageService, DsaUserService userService) {
+        this.chatMessageService = chatMessageService;
+        this.userService = userService;
+    }
+
+    private String getUsername(WebSocketSession session) {
+        return (String) session.getAttributes().get("username");
+    }
+
     @Override
     public void afterConnectionEstablished(
             WebSocketSession session) throws Exception {
 
+        String username = getUsername(session);
+
+        if (username == null || username.isBlank()) {
+            session.close(CloseStatus.POLICY_VIOLATION);
+            return;
+        }
+
         sessions.add(session);
 
-        LOGGER.info("User connected: {}", session.getId());
+        LOGGER.info("User connected: {}", username);
 
-        broadcastMessage(
-                "User " + session.getId() + " joined the chat"
-        );
+        broadcastMessage(username + " joined the chat");
     }
 
     @Override
@@ -40,14 +62,28 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             WebSocketSession session,
             TextMessage message) throws Exception {
 
+        String username = getUsername(session);
+
+        if (username == null || username.isBlank()) {
+            session.close(CloseStatus.POLICY_VIOLATION);
+            return;
+        }
+
         String payload = message.getPayload().trim();
 
         if (payload.isEmpty()) {
             return;
         }
 
+        UserSearchResponse user = userService.retrieveUserByUsername(username);
+        ChatMessageAddUpdateRequest request = new ChatMessageAddUpdateRequest();
+        request.setDsaUser(user.getAuthInfo());
+        request.setContent(payload);
+        request.setSentDatetime(LocalDateTime.now());
+        chatMessageService.sendMessage(request);
+
         String chatMessage =
-                "[" + session.getId() + "]: " + payload;
+                "[" + username + "]: " + payload;
 
         LOGGER.info("Message received: {}", chatMessage);
 
@@ -59,13 +95,15 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             WebSocketSession session,
             CloseStatus status) throws Exception {
 
-        sessions.remove(session);
+        boolean removed = sessions.remove(session);
 
-        LOGGER.info("User disconnected: {}", session.getId());
+        String username = getUsername(session);
 
-        broadcastMessage(
-                "User " + session.getId() + " left the chat"
-        );
+        LOGGER.info("User disconnected: {}", username);
+
+        if (removed && username != null) {
+            broadcastMessage(username + " left the chat");
+        }
     }
 
     @Override
@@ -116,7 +154,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 try {
                     client.close(CloseStatus.SERVER_ERROR);
                 } catch (IOException ignored) {
-                    // Connection already closed.
                 }
             }
         }
