@@ -51,7 +51,7 @@ public class DSAUserServiceTest {
         UserListResponse response = dsaUserService.retrieveAllUsers();
 
         assertNotNull(response);
-        assertEquals(expected.size(),response.getList().size());
+        assertEquals(expected.size(), response.getList().size());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class DSAUserServiceTest {
         UserSearchResponse result = dsaUserService.retrieveUserById(1000);
 
         assertNotNull(result);
-        assertEquals(expected,result.getUser());
+        assertEquals(expected, result.getUser());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class DSAUserServiceTest {
         UserSearchResponse result = dsaUserService.retrieveUserByUsername(anyString());
 
         assertNotNull(result);
-        assertEquals(expected,result.getAuthInfo());
+        assertEquals(expected, result.getAuthInfo());
     }
 
     @Test
@@ -96,9 +96,9 @@ public class DSAUserServiceTest {
         ResponseEntity<DsaUser> result = dsaUserService.registerNewDsaUser(registerRequest);
 
         assertNotNull(result);
-        assertEquals(HttpStatus.OK,result.getStatusCode());
-        assertEquals(registerRequest.getUsername(),result.getBody().getUsername());
-        assertEquals("encodedPassword",result.getBody().getPassword());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(registerRequest.getUsername(), result.getBody().getUsername());
+        assertEquals("encodedPassword", result.getBody().getPassword());
     }
 
     @Test
@@ -153,6 +153,6 @@ public class DSAUserServiceTest {
         UserSearchResponse result = dsaUserService.deleteUserById(1L);
 
         assertNotNull(result);
-        assertEquals(user,result.getUser());
+        assertEquals(user, result.getUser());
     }
 }
