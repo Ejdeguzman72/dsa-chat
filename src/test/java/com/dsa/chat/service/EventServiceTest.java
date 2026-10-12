@@ -49,7 +49,7 @@ public class EventServiceTest {
         EventListResponse result = eventService.getAllEvents();
 
         assertNotNull(result);
-        assertEquals(expected,result);
+        assertEquals(expected,result.getList());
     }
 
     @Test

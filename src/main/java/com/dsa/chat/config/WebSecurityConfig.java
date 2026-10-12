@@ -1,8 +1,10 @@
+
 package com.dsa.chat.config;
 
 import com.dsa.chat.domain.UriConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,43 +30,100 @@ public class WebSecurityConfig {
         this.jwtTokenFilter = jwtTokenFilter;
     }
 
+    // WebSocket endpoint - no JWT required
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain webSocketSecurityFilterChain(
+            HttpSecurity http) throws Exception {
+
         http
-                .csrf(csrf -> csrf.disable())  // Disable CSRF protection for stateless authentication
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Apply the custom CORS configuration
+                .securityMatcher("/chat")
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(UriConstants.AUTHORIZED_REQUESTS_PATH,"/**").permitAll()  // Allow unauthenticated access to specific paths like '/auth/authenticate'
-                        .anyRequest().authenticated()  // Require authentication for all other requests
+                        .anyRequest().permitAll()
+                );
+
+        return http.build();
+    }
+
+    // Existing REST API security
+    @Bean
+    @Order(2)
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
+
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(
+                        corsConfigurationSource()
+                ))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                UriConstants.AUTHORIZED_REQUESTS_PATH
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // Stateless session management (no sessions)
+                        .sessionCreationPolicy(
+                                SessionCreationPolicy.STATELESS
+                        )
                 )
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT token filter before authentication filter
+                .addFilterBefore(
+                        jwtTokenFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("*"); // Allow all origins (use specific origins in production for security)
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Allowed HTTP methods
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));  // Allow Authorization and Content-Type headers
-        configuration.setAllowCredentials(true);  // Allow cookies/credentials to be included in the request
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);  // Apply the CORS configuration to all endpoints
+        CorsConfiguration configuration =
+                new CorsConfiguration();
+
+        configuration.addAllowedOriginPattern("*");
+
+        configuration.setAllowedMethods(
+                Arrays.asList(
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                )
+        );
+
+        configuration.setAllowedHeaders(
+                Arrays.asList(
+                        "Authorization",
+                        "Content-Type"
+                )
+        );
+
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration(
+                "/**",
+                configuration
+        );
+
         return source;
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();  // Return the AuthenticationManager bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration)
+            throws Exception {
+
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Provide a password encoder for BCrypt hashing
+        return new BCryptPasswordEncoder();
     }
 }
