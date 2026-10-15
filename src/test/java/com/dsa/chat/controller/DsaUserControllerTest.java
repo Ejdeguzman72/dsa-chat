@@ -1,6 +1,8 @@
 package com.dsa.chat.controller;
 
 import com.dsa.chat.config.JwtUtil;
+import com.dsa.chat.domain.DsaUser;
+import com.dsa.chat.domain.RegisterRequest;
 import com.dsa.chat.domain.UserListResponse;
 import com.dsa.chat.domain.UserSearchResponse;
 import com.dsa.chat.service.DSAUserDetailsService;
@@ -11,14 +13,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DsaUserControllerTest {
@@ -50,6 +52,57 @@ public class DsaUserControllerTest {
 
         assertNotNull(result);
         assertEquals(expected,result);
+
+        verify(dsaUserService,times(1)).retrieveAllUsers();
+    }
+
+
+    public void registerUser_successTest() {
+        DsaUser user = new DsaUser();
+        ResponseEntity<DsaUser> expected = ResponseEntity.ok(user);
+
+        RegisterRequest request = new RegisterRequest();
+
+        when(dsaUserService.registerNewDsaUser(eq(request))).thenReturn(expected);
+
+
+        ResponseEntity<DsaUser> result = ResponseEntity.ok(user);
+
+        assertNotNull(result);
+    }
+
+    @Test
+    public void retrieveUserByIdTest_successTest() {
+        long userId = 1000L;
+
+        UserSearchResponse expected = new UserSearchResponse();
+
+
+        when(dsaUserService.retrieveUserById(eq(userId))).thenReturn(expected);
+
+        UserSearchResponse result = dsaUserController.retrieveUserById(userId);
+
+        assertNotNull(result);
+        assertEquals(expected,result);
+
+        verify(dsaUserService,times(1)).retrieveUserById(userId);
+    }
+
+    @Test
+    public void retrieveUserByNameTest_successTest() {
+        String name = "USER NAME";
+
+        UserSearchResponse expected = new UserSearchResponse();
+
+
+        when(dsaUserService.retrieveUserByUsername(eq(name))).thenReturn(expected);
+
+        UserSearchResponse result = dsaUserController.retrieveUserByUsername(name);
+
+        assertNotNull(result);
+        assertEquals(expected,result);
+
+        verify(dsaUserService,times(1)).retrieveUserByUsername(name);
     }
 
     @Test
@@ -65,5 +118,7 @@ public class DsaUserControllerTest {
 
         assertNotNull(result);
         assertEquals(expected,result);
+
+        verify(dsaUserService,times(1)).deleteUserById(userId);
     }
 }
