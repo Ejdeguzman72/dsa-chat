@@ -37,7 +37,6 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     public static final String UPDATE_DSA_USER_INFO =
             "UPDATE DSA_USER SET " +
                     "USERNAME = ?, " +
-                    "PASSWORD = ?, " +
                     "EMAIL = ?, " +
                     "FIRSTNAME = ?, " +
                     "LASTNAME = ?, " +
@@ -125,7 +124,6 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
                     UPDATE_DSA_USER_INFO,
                     new Object[]{
                             dsaUser.getUsername(),
-                            dsaUser.getPassword(),
                             dsaUser.getEmail(),
                             dsaUser.getFirstname(),
                             dsaUser.getLastname(),
