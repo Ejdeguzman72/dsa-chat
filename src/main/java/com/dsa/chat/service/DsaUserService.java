@@ -47,7 +47,7 @@ public class DsaUserService {
             if (result > 0) {
                 DsaUser updatedUser = new DsaUser();
                 updatedUser.setUsername(request.getUsername());
-                updatedUser.setPassword(request.getPassword());
+                updatedUser.setPassword(passwordEncoder.encode(request.getPassword()));
                 updatedUser.setEmail(request.getEmail());
                 updatedUser.setDescription(request.getDescription());
                 updatedUser.setFirstname(request.getFirstname());

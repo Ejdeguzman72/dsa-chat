@@ -98,7 +98,7 @@ public class DsaUserController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @PostMapping(value = UriConstants.UPDATE_DSA_USER_INFO)
+    @PutMapping(value = UriConstants.UPDATE_DSA_USER_INFO)
     @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
     public DsaUserAddUpdateResponse updateDSAUser(@RequestBody DsaUserAddUpdateRequest request) {
         return dsaUserService.updateDSAUserInfo(request);
