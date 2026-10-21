@@ -2,7 +2,7 @@ package com.dsa.chat.config;
 
 import com.dsa.chat.domain.ChatMessageAddUpdateRequest;
 import com.dsa.chat.domain.UserSearchResponse;
-import com.dsa.chat.service.AiChatService;
+import com.dsa.chat.service.AIChatService;
 import com.dsa.chat.service.ChatMessageService;
 import com.dsa.chat.service.DsaUserService;
 import jakarta.annotation.PreDestroy;
@@ -30,7 +30,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
     private final ChatMessageService chatMessageService;
     private final DsaUserService userService;
-    private final AiChatService aiChatService;
+    private final AIChatService aiChatService;
 
     private final Set<WebSocketSession> sessions =
             ConcurrentHashMap.newKeySet();
@@ -41,7 +41,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public ChatWebSocketHandler(
             ChatMessageService chatMessageService,
             DsaUserService userService,
-            AiChatService aiChatService) {
+            AIChatService aiChatService) {
 
         this.chatMessageService = chatMessageService;
         this.userService = userService;

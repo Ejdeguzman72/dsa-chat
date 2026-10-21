@@ -34,11 +34,9 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
             WebSocketHandler wsHandler,
             Map<String, Object> attributes) {
 
-        String authorization = request.getHeaders()
-                .getFirst(HttpHeaders.AUTHORIZATION);
+        String authorization = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
-        if (authorization == null ||
-                !authorization.startsWith("Bearer ")) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
 
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             return false;
@@ -59,13 +57,9 @@ public class JwtWebSocketInterceptor implements HandshakeInterceptor {
                 return false;
             }
 
-            UserDetails userDetails =
-                    userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            boolean valid = jwtUtil.validateToken(
-                    token,
-                    userDetails
-            );
+            boolean valid = jwtUtil.validateToken(token, userDetails);
 
             if (!valid
                     || !userDetails.isEnabled()

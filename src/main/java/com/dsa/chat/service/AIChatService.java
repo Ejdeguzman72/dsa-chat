@@ -8,11 +8,11 @@ import org.springframework.web.client.RestClient;
 import java.util.Map;
 
 @Service
-public class AiChatService {
+public class AIChatService {
 
     private final RestClient restClient;
 
-    public AiChatService(
+    public AIChatService(
             @Value("${openai.api.key}") String apiKey) {
 
         this.restClient = RestClient.builder()
