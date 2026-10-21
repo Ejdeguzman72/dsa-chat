@@ -39,20 +39,17 @@ public class AiChatService {
                 .body(JsonNode.class);
 
         if (response == null) {
-            throw new IllegalStateException(
-                    "AI returned an empty response");
+            throw new IllegalStateException("AI returned an empty response");
         }
 
         for (JsonNode output : response.path("output")) {
             for (JsonNode content : output.path("content")) {
-                if ("output_text".equals(
-                        content.path("type").asText())) {
-                    return content.path("text").asText();
+                if ("output_text".equals(content.path("type").stringValue())) {
+                    return content.path("text").stringValue();
                 }
             }
         }
 
-        throw new IllegalStateException(
-                "AI returned no text");
+        throw new IllegalStateException("AI returned no text");
     }
 }
