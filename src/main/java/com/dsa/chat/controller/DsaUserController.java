@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class DsaUserController {
     @Autowired
     private DsaUserService dsaUserService;
@@ -55,7 +56,7 @@ public class DsaUserController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
     @PostMapping(UriConstants.USER_REGISTER_URI)
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
     public ResponseEntity<DsaUser> registerUser(@RequestBody RegisterRequest request) {
         return dsaUserService.registerNewDsaUser(request);
     }

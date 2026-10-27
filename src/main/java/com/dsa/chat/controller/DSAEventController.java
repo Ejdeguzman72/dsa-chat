@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 public class DSAEventController {
     @Autowired
     private EventService eventService;
