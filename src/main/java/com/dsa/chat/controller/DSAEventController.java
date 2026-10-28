@@ -27,6 +27,28 @@ public class DSAEventController {
         return eventService.getAllEvents();
     }
 
+    @ApiOperation(value = AppConstants.GET_PAST_EVENTS)
+    @ApiResponses(value = {
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
+    @GetMapping(UriConstants.GET_PAST_EVENTS)
+    @CrossOrigin
+    public EventListResponse getPastEvents() {
+        return eventService.getPastEvents();
+    }
+
+    @ApiOperation(value = AppConstants.GET_UPCOMING_EVENTS)
+    @ApiResponses(value = {
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
+    @GetMapping(UriConstants.GET_UPCOMING_EVENTS)
+    @CrossOrigin
+    public EventListResponse getUpcomingEvents() {
+        return eventService.getUpcomingEvents();
+    }
+
     @ApiOperation(value = AppConstants.GET_ALL_EVENTS_BY_TYPE)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),

@@ -28,16 +28,26 @@ public class EventRepositoryImpl implements EventRepository {
     public static final String ADD_NEW_EVENT = "INSERT INTO DSA_EVENT (EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_DATETIME,LAST_UPDATETIME) VALUES(?,?,?,?,?,?,?,?,?,?)";
     public static final String UPDATE_EXISTING_EVENT = "UPDATE SDA_EVENT SET EVENT_NAME = ?,EVENT_TYPE=?,EVENT_DATE = ?,DESCRIPTION = ?,ATTENDEES = ?, CONFIRMED_ATTENEES = ?,TENTATIVE_ATTENDEES = ?,DECLINED_ATTENDEES = ?,CREATE_DATETIME = ?,LAST_UPDATETIME = ? WHERE EVENT_ID = ?";
     public static final String DELETE_EVENT = "DELETE FROM DSA_EVENT WHERE EVENT_ID = ?";
+    public static final String GET_PAST_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE < CURRENT_DATE";
+    public static final String GET_UPCOMING_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE > CURRENT_DATE";
     @Override
     public List<DSAEvent> getAllEvents() {
-        List<DSAEvent> list = jdbcTemplate.query(GET_ALL_EVENTS,eventMapper);
-        return list;
+        return jdbcTemplate.query(GET_ALL_EVENTS,eventMapper);
     }
 
     @Override
     public List<DSAEvent> searchEventsByType(String eventType) {
-        List<DSAEvent> list = jdbcTemplate.query(GET_ALL_EVENTS_BY_TYPE,eventMapper,eventType);
-        return list;
+        return jdbcTemplate.query(GET_ALL_EVENTS_BY_TYPE,eventMapper,eventType);
+    }
+
+    @Override
+    public List<DSAEvent> searchPastEvents() {
+        return jdbcTemplate.query(GET_PAST_EVENTS,eventMapper);
+    }
+
+    @Override
+    public List<DSAEvent> searchUpcomingEvents() {
+        return jdbcTemplate.query(GET_UPCOMING_EVENTS,eventMapper);
     }
 
     @Override
@@ -54,8 +64,7 @@ public class EventRepositoryImpl implements EventRepository {
     @Override
     public DSAEvent searchDsaEventByName(String eventName) {
         try {
-            DSAEvent event = jdbcTemplate.queryForObject(GET_EVENT_BY_NAME,eventMapper,eventName);
-            return event;
+            return jdbcTemplate.queryForObject(GET_EVENT_BY_NAME,eventMapper,eventName);
         } catch (EmptyResultDataAccessException e) {
             e.printStackTrace();
         }

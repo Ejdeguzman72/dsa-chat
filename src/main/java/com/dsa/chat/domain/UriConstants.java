@@ -20,6 +20,8 @@ public class UriConstants {
     public static final String DELETE_MESSAGE="/chat/delete-message/{chatMessageId}";
 
     public static final String GET_ALL_EVENTS = "/events/all";
+    public static final String GET_PAST_EVENTS = "/events/all/past-events";
+    public static final String GET_UPCOMING_EVENTS = "/events/all/upcoming-events";
     public static final String GET_ALL_EVENTS_BY_TYPE = "/events/all/type/{eventType}";
     public static final String GET_EVENT_BY_ID = "/events/search/id/{eventId}";
     public static final String GET_EVENT_BY_NAME = "/events/search/name/{eventName}";

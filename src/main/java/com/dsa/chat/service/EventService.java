@@ -31,6 +31,22 @@ public class EventService {
         return response;
     }
 
+    public EventListResponse getPastEvents() {
+        EventListResponse response = new EventListResponse();
+        List<DSAEvent> list = eventRepository.searchPastEvents();
+
+        response.setList(list);
+        return response;
+    }
+
+    public EventListResponse getUpcomingEvents() {
+        EventListResponse response = new EventListResponse();
+        List<DSAEvent> list = eventRepository.searchUpcomingEvents();
+
+        response.setList(list);
+        return response;
+    }
+
     public EventSearchResponse getEventById(UUID eventId) {
         EventSearchResponse response = new EventSearchResponse();
         DSAEvent event = eventRepository.searchDsaEventById(eventId);

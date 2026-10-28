@@ -30,6 +30,8 @@ public class AppConstants {
     public static final String DELETE_MESSAGE = "DELETE_MESSAGE";
 
     public static final String GET_ALL_EVENTS = "GET_ALL_EVENTS";
+    public static final String GET_PAST_EVENTS = "GET_PAST_EVENTS";
+    public static final String GET_UPCOMING_EVENTS = "GET_UPCOMING_EVENTS";
     public static final String GET_ALL_EVENTS_BY_TYPE = "GET_ALL_EVENTS_BY_TYPE";
     public static final String GET_EVENT_BY_ID = "GET_EVENT_BY_ID";
     public static final String GET_EVENT_BY_NAME = "GET_EVENT_BY_NAME";
