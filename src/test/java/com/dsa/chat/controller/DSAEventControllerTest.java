@@ -36,6 +36,32 @@ public class DSAEventControllerTest {
     }
 
     @Test
+    public void getPastEvents_successTest() {
+        EventListResponse expected = new EventListResponse();
+
+        when(dsaEventController.getPastEvents()).thenReturn(expected);
+
+        EventListResponse result = dsaEventController.getPastEvents();
+
+        assertNotNull(result);
+
+        verify(eventService,times(1)).getPastEvents();
+    }
+
+    @Test
+    public void getUpcomingEvents_successTest() {
+        EventListResponse expected = new EventListResponse();
+
+        when(dsaEventController.getUpcomingEvents()).thenReturn(expected);
+
+        EventListResponse result = dsaEventController.getUpcomingEvents();
+
+        assertNotNull(result);
+
+        verify(eventService,times(1)).getUpcomingEvents();
+    }
+
+    @Test
     public void getAllEventsByType_successTest() {
         String eventType = "RECREATIONAL";
         EventListResponse expected = new EventListResponse();

@@ -55,6 +55,54 @@ public class EventServiceTest {
     }
 
     @Test
+    public void getPastEvents_successTest() {
+        DSAEvent event = new DSAEvent();
+        event.setEventId(UUID.randomUUID());
+        event.setEventName("TEST EVENT NAME");
+        event.setDescription("TEST DESCRIPTION FOR TEST EVENT");
+        event.setEventDate(LocalDate.parse("2024-03-01"));
+        event.setEventType("TEST EVENT TYPE");
+        event.setCreateTime(LocalDate.now());
+        event.setLastUpdateTime(LocalDate.now());
+        event.setAttendees(null);
+        event.setConfirmedAttendees(null);
+        event.setTentativeAttendees(null);
+        event.setDeclinedAttendees(null);
+        List<DSAEvent> expected = List.of(event);
+
+        when(eventRepository.searchPastEvents()).thenReturn(expected);
+
+        EventListResponse result = eventService.getPastEvents();
+
+        assertNotNull(result);
+        assertEquals(expected, result.getList());
+    }
+
+    @Test
+    public void getUpcomingEvents_successTest() {
+        DSAEvent event = new DSAEvent();
+        event.setEventId(UUID.randomUUID());
+        event.setEventName("TEST EVENT NAME");
+        event.setDescription("TEST DESCRIPTION FOR TEST EVENT");
+        event.setEventDate(LocalDate.parse("2030-03-01"));
+        event.setEventType("TEST EVENT TYPE");
+        event.setCreateTime(LocalDate.now());
+        event.setLastUpdateTime(LocalDate.now());
+        event.setAttendees(null);
+        event.setConfirmedAttendees(null);
+        event.setTentativeAttendees(null);
+        event.setDeclinedAttendees(null);
+        List<DSAEvent> expected = List.of(event);
+
+        when(eventRepository.searchUpcomingEvents()).thenReturn(expected);
+
+        EventListResponse result = eventService.getUpcomingEvents();
+
+        assertNotNull(result);
+        assertEquals(expected, result.getList());
+    }
+
+    @Test
     public void getAllEventsByType_successTest() {
         DSAEvent event = new DSAEvent();
         event.setEventId(UUID.randomUUID());
