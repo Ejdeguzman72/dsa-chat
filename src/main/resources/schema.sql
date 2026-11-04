@@ -101,3 +101,16 @@ CREATE TABLE IF NOT EXISTS public.announcement (
     create_datetime DATE NULL,
     last_updatedatetime DATE NULL
 );
+
+-- =====================================================
+-- PASSWORD RESET TOKENS
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS public.password_reset_tokens (
+    token_id BIGSERIAL PRIMARY KEY,
+    user_id BIGINT NOT NULL REFERNECES users(user_id) ON DELETE CASCADE,
+    token_hash VARCHAR(64) NOT NULL UNIQUE,
+    expires_at TIMESTAMPTZ NOT NULL,
+    used_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+)
