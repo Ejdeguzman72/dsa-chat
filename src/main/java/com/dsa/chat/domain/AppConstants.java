@@ -38,4 +38,10 @@ public class AppConstants {
     public static final String ADD_EVENT_INFO = "ADD_EVENT_INFO";
     public static final String UPDATE_EVENT_INFO = "UPDATE_EVENT_INFO";
     public static final String DELETE_EVENT_INFO = "DELETE_EVENT_INFO";
+
+    public static final String GET_ALL_ANNOUNCEMENTS = "GET_ALL_ANNOUNCEMENTS";
+    public static final String GET_ANNOUNCEMENT_BY_ID = "GET_ANNOUNCEMENT_BY_ID";
+    public static final String CREATE_ANNOUNCEMENT = "CREATE_ANNOUNCEMENT";
+    public static final String UPDATE_ANNOUNCEMENT = "UPDATE_ANNOUNCEMENT";
+    public static final String DELETE_ANNOUNCEMENT = "DELETE_ANNOUNCEMENT";
 }
