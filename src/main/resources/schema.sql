@@ -78,16 +78,16 @@ CREATE TABLE IF NOT EXISTS public.chat_message (
 
 CREATE TABLE IF NOT EXISTS public.dsa_event (
     event_id UUID NOT NULL PRIMARY KEY,
+    event_name VARCHAR(255) NULL,
+    event_date DATE NULL,
+    event_type VARCHAR(255) NULL,
+    description VARCHAR(255) NULL,
     attendees BIGINT[] NULL,
     confirmed_attendees BIGINT[] NULL,
-    create_time DATE NULL,
     declined_attendees BIGINT[] NULL,
-    description VARCHAR(255) NULL,
-    event_date DATE NULL,
-    event_name VARCHAR(255) NULL,
-    event_type VARCHAR(255) NULL,
-    last_updatetime DATE NULL,
     tentative_attendees BIGINT[] NULL
+    create_time DATE NULL,
+    last_updatetime DATE NULL,
 );
 
 -- =====================================================
