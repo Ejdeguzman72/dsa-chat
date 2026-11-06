@@ -2,6 +2,7 @@
 package com.dsa.chat.config;
 
 import com.dsa.chat.domain.AppConstants;
+import com.dsa.chat.domain.UriConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,10 +28,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Override
-    protected boolean shouldNotFilter(
-            HttpServletRequest request) {
+    protected boolean shouldNotFilter(HttpServletRequest request) {
 
-        return "/chat".equals(request.getServletPath());
+        String path = request.getServletPath();
+
+        return path.equals("/chat")
+                || path.equals(UriConstants.USER_AUTHENTICATE_URI)
+                || path.equals(UriConstants.USER_REGISTER_URI)
+                || path.equals(UriConstants.FORGOT_PASSWORD)
+                || path.equals(UriConstants.RESET_PASSWORD);
     }
 
     @Override

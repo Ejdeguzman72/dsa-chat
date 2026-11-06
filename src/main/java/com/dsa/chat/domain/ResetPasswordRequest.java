@@ -1,7 +1,7 @@
 package com.dsa.chat.domain;
 
 public class ResetPasswordRequest {
-    String token,
+    String token;
     String newPassword;
 
     public String getToken() {

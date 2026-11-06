@@ -108,9 +108,9 @@ CREATE TABLE IF NOT EXISTS public.announcement (
 
 CREATE TABLE IF NOT EXISTS public.password_reset_tokens (
     token_id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL REFERNECES users(user_id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES dsa_user(user_id) ON DELETE CASCADE,
     token_hash VARCHAR(64) NOT NULL UNIQUE,
     expires_at TIMESTAMPTZ NOT NULL,
     used_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-)
+);
