@@ -41,7 +41,7 @@ public class AnnouncementController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @GetMapping(UriConstants.CREATE_ANNOUNCEMENT)
+    @PostMapping(UriConstants.CREATE_ANNOUNCEMENT)
     @CrossOrigin(origins = "*")
     public AnnouncementAddUpdateResponse createAnnouncement(@RequestBody AnnouncementAddUpdateRequest request) {
         return announcementService.createAnnouncement(request);
@@ -52,7 +52,7 @@ public class AnnouncementController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @GetMapping(UriConstants.UPDATE_ANNOUNCEMENT)
+    @PutMapping(UriConstants.UPDATE_ANNOUNCEMENT)
     @CrossOrigin(origins = "*")
     public AnnouncementAddUpdateResponse updateAnnouncement(@RequestBody AnnouncementAddUpdateRequest request) {
         return announcementService.updateAnnouncement(request);
@@ -63,7 +63,7 @@ public class AnnouncementController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @GetMapping(UriConstants.DELETE_ANNOUNCEMENT)
+    @DeleteMapping(UriConstants.DELETE_ANNOUNCEMENT)
     @CrossOrigin(origins = "*")
     public AnnouncementSearchResponse deleteAnnouncement(@PathVariable long announcementId) {
         return announcementService.deleteAnnouncement(announcementId);

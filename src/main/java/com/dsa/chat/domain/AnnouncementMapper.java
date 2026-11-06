@@ -17,7 +17,7 @@ public class AnnouncementMapper implements RowMapper<Announcement> {
         announcement.setContent(rs.getString("CONTENT"));
         announcement.setSentDatetime(rs.getTimestamp("SENT_DATETIME").toLocalDateTime());
         announcement.setCreationDate(rs.getTimestamp("CREATE_DATETIME").toLocalDateTime());
-        announcement.setUpdateDateTime(rs.getTimestamp("UPDATE_DATETIME").toLocalDateTime());
+        announcement.setUpdateDateTime(rs.getTimestamp("LAST_UPDATEDATETIME").toLocalDateTime());
 
         return announcement;
     }

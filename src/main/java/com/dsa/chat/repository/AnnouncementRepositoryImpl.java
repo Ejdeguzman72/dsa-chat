@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -26,9 +27,9 @@ public class AnnouncementRepositoryImpl {
     }
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnouncementRepositoryImpl.class);
 
-    public static final String RETRIEVE_ALL_ANNOUNCEMENTS = "SELECT ANNOUNCEMENT_ID, CONTENT, SENT_DATETIME FROM ANNOUNCEMENT";
+    public static final String RETRIEVE_ALL_ANNOUNCEMENTS = "SELECT ANNOUNCEMENT_ID, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT";
     public static final String RETRIEVE_ANNOUNCEMENT_BY_ID = "SELECT ANNOUNCEMENT_ID, CONTENT, SENT_DATETIME FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
-    public static final String CREATE_ANNOUNCEMENT = "INSERT INTO ANNOUNCEMENT (CONTENT, SENTDATETIME) VALUES (?,?)";
+    public static final String CREATE_ANNOUNCEMENT = "INSERT INTO ANNOUNCEMENT (CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME) VALUES (?,?,?,?)";
     public static final String UPDATE_ANNOUNCEMENT = "UPDATE ANNOUNCEMENT SET CONTENT = ? WHERE ANNOUNCEMENT_ID = ?";
     public static final String DELETE_ANNOUNCEMENT = "DELETE ANNOUNCEMENT FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
 
@@ -50,7 +51,10 @@ public class AnnouncementRepositoryImpl {
             request.setUpdateDateTime(announcement.getUpdateDateTime());
 
             result = jdbcTemplate.update(CREATE_ANNOUNCEMENT,new Object[] {
-                    request
+                    request.getContent(),
+                    LocalDateTime.now(),
+                    LocalDateTime.now(),
+                    LocalDateTime.now()
             });
         }
 
