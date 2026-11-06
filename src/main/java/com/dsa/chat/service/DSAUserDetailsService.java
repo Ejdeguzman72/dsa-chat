@@ -18,7 +18,6 @@ public class DSAUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         DsaUser user = dsaUserRepository.retrieveUserByUsername(username);
-        LOGGER.info("Finding user: " + username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());
     }
 }
