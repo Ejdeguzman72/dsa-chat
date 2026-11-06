@@ -85,9 +85,9 @@ CREATE TABLE IF NOT EXISTS public.dsa_event (
     attendees BIGINT[] NULL,
     confirmed_attendees BIGINT[] NULL,
     declined_attendees BIGINT[] NULL,
-    tentative_attendees BIGINT[] NULL
+    tentative_attendees BIGINT[] NULL,
     create_time DATE NULL,
-    last_updatetime DATE NULL,
+    last_updatetime DATE NULL
 );
 
 -- =====================================================
