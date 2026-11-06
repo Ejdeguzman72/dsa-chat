@@ -65,6 +65,11 @@ jobs:
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: testpassword
 
+          # SMTP configuration for CI tests
+          SMTP_HOST: localhost
+          SMTP_USERNAME: test@example.com
+          SMTP_PASSWORD: testpassword
+
   package:
     name: package
     runs-on: ubuntu-latest
