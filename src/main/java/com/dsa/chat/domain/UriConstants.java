@@ -32,6 +32,10 @@ public class UriConstants {
     public static final String UPDATE_EVENT_INFO = "/events/update";
     public static final String DELETE_EVENT_INFO = "events/delete/{eventId}";
 
+    public static final String RETRIEVE_ATTENDEES_BY_EVENT = "/event-attendees/search/event/{eventId}";
+    public static final String SAVE_ATTENDANCE = "/event-attendees/save-attendance";
+    public static final String UPDATE_ATTENDANCE = "/event-attendees/update-attendance";
+
     public static final String GET_ALL_ANNOUNCEMENTS = "/announcements/all";
     public static final String GET_ANNOUNCEMENT = "/announcements/search/id/{announcementId}";
     public static final String CREATE_ANNOUNCEMENT = "/announcements/create-announcement";

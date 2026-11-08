@@ -39,6 +39,10 @@ public class AppConstants {
     public static final String UPDATE_EVENT_INFO = "UPDATE_EVENT_INFO";
     public static final String DELETE_EVENT_INFO = "DELETE_EVENT_INFO";
 
+    public static final String RETRIEVE_ATTENDEES_BY_EVENT = "RETRIEVE_ATTENDEES_BY_EVENT";
+    public static final String SAVE_ATTENDANCE = "SAVE_ATTENDANCE";
+    public static final String UPDATE_ATTENDANCE = "UPDATE_ATTENDANCE";
+
     public static final String GET_ALL_ANNOUNCEMENTS = "GET_ALL_ANNOUNCEMENTS";
     public static final String GET_ANNOUNCEMENT_BY_ID = "GET_ANNOUNCEMENT_BY_ID";
     public static final String CREATE_ANNOUNCEMENT = "CREATE_ANNOUNCEMENT";
