@@ -124,14 +124,14 @@ public class DSAEventControllerTest {
         event.setEventName("TEST EVENT NAME");
         expected.setEvent(event);
 
-        when(eventService.saveMessageInfo(eq(request))).thenReturn(expected);
+        when(eventService.createEvent(eq(request))).thenReturn(expected);
 
         EventAddUpdateResponse result = dsaEventController.addEventInfo(request);
 
         assertNotNull(result);
         assertEquals(request.getEventName(),expected.getEvent().getEventName());
 
-        verify(eventService,times(1)).saveMessageInfo(request);
+        verify(eventService,times(1)).createEvent(request);
     }
 
     @Test

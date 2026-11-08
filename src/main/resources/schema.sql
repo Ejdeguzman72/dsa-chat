@@ -82,10 +82,6 @@ CREATE TABLE IF NOT EXISTS public.dsa_event (
     event_date DATE NULL,
     event_type VARCHAR(255) NULL,
     description VARCHAR(255) NULL,
-    attendees BIGINT[] NULL,
-    confirmed_attendees BIGINT[] NULL,
-    declined_attendees BIGINT[] NULL,
-    tentative_attendees BIGINT[] NULL,
     create_time DATE NULL,
     last_updatetime DATE NULL
 );
@@ -113,4 +109,39 @@ CREATE TABLE IF NOT EXISTS public.password_reset_tokens (
     expires_at TIMESTAMPTZ NOT NULL,
     used_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- =====================================================
+-- EVENT_ATTENDEE
+-- =====================================================
+
+CREATE TABLE IF NOT EXISTS event_attendee (
+    event_id UUID NOT NULL,
+    user_id BIGINT NOT NULL,
+
+    attendance_status VARCHAR(20) NOT NULL
+        DEFAULT 'PENDING',
+
+    responded_at TIMESTAMP,
+
+    CONSTRAINT pk_event_attendee
+        PRIMARY KEY (event_id, user_id),
+
+    CONSTRAINT fk_event_attendee_event
+        FOREIGN KEY (event_id)
+        REFERENCES dsa_event(event_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_event_attendee_user
+        FOREIGN KEY (user_id)
+        REFERENCES dsa_user(user_id)
+        ON DELETE CASCADE
+
+--    CONSTRAINT chk_attendance_status
+--        CHECK (attendance_status IN (
+--            'PENDING',
+--            'CONFIRMED',
+--            'TENTATIVE',
+--            'DECLINED'
+--        ))
 );

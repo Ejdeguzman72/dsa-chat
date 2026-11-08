@@ -21,15 +21,15 @@ public class EventRepositoryImpl implements EventRepository {
         this.eventMapper = eventMapper;
     }
 
-    public static final String GET_ALL_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT";
-    public static final String GET_ALL_EVENTS_BY_TYPE = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_TYPE = ?";
-    public static final String GET_EVENT_BY_ID = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_ID = ?";
-    public static final String GET_EVENT_BY_NAME = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_NAME = ?";
-    public static final String ADD_NEW_EVENT = "INSERT INTO DSA_EVENT (EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_DATETIME,LAST_UPDATETIME) VALUES(?,?,?,?,?,?,?,?,?,?)";
-    public static final String UPDATE_EXISTING_EVENT = "UPDATE SDA_EVENT SET EVENT_NAME = ?,EVENT_TYPE=?,EVENT_DATE = ?,DESCRIPTION = ?,ATTENDEES = ?, CONFIRMED_ATTENEES = ?,TENTATIVE_ATTENDEES = ?,DECLINED_ATTENDEES = ?,CREATE_DATETIME = ?,LAST_UPDATETIME = ? WHERE EVENT_ID = ?";
+    public static final String GET_ALL_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT";
+    public static final String GET_ALL_EVENTS_BY_TYPE = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_TYPE = ?";
+    public static final String GET_EVENT_BY_ID = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_ID = ?";
+    public static final String GET_EVENT_BY_NAME = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_NAME = ?";
+    public static final String ADD_NEW_EVENT = "INSERT INTO DSA_EVENT (EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME) VALUES(?,?,?,?,?,?,?)";
+    public static final String UPDATE_EXISTING_EVENT = "UPDATE SDA_EVENT SET EVENT_NAME = ?,EVENT_TYPE=?,EVENT_DATE = ?,DESCRIPTION = ?,CREATE_DATETIME = ?,LAST_UPDATETIME = ? WHERE EVENT_ID = ?";
     public static final String DELETE_EVENT = "DELETE FROM DSA_EVENT WHERE EVENT_ID = ?";
-    public static final String GET_PAST_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE < CURRENT_DATE";
-    public static final String GET_UPCOMING_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,ATTENDEES,CONFIRMED_ATTENDEES,TENTATIVE_ATTENDEES,DECLINED_ATTENDEES,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE > CURRENT_DATE";
+    public static final String GET_PAST_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE < CURRENT_DATE";
+    public static final String GET_UPCOMING_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE > CURRENT_DATE";
     @Override
     public List<DSAEvent> getAllEvents() {
         return jdbcTemplate.query(GET_ALL_EVENTS,eventMapper);
@@ -76,14 +76,11 @@ public class EventRepositoryImpl implements EventRepository {
         int result = 0;
         if (dsaEvent != null) {
             result = jdbcTemplate.update(ADD_NEW_EVENT,new Object[] {
+                    dsaEvent.getEventId(),
                     dsaEvent.getEventName(),
-                    dsaEvent.getEventDate(),
                     dsaEvent.getEventType(),
+                    dsaEvent.getEventDate(),
                     dsaEvent.getDescription(),
-                    dsaEvent.getAttendees(),
-                    dsaEvent.getConfirmedAttendees(),
-                    dsaEvent.getTentativeAttendees(),
-                    dsaEvent.getDeclinedAttendees(),
                     dsaEvent.getCreateTime(),
                     dsaEvent.getLastUpdateTime()
             });
@@ -100,10 +97,6 @@ public class EventRepositoryImpl implements EventRepository {
             event.setEventType(request.getEventType());
             event.setDescription(request.getDescription());
             event.setEventDate(request.getEventDate());
-            event.setAttendees(request.getAttendees());
-            event.setConfirmedAttendees(request.getConfirmedAttendees());
-            event.setTentativeAttendees(request.getTentativeAttendees());
-            event.setDeclinedAttendees(request.getDeclinedAttendees());
             event.setCreateTime(request.getCreateTime());
             event.setLastUpdateTime(LocalDate.now());
         }

@@ -23,20 +23,6 @@ public class EventMapper implements RowMapper<DSAEvent> {
         event.setDescription(rs.getString("DESCRIPTION"));
         event.setCreateTime(rs.getDate("CREATE_TIME").toLocalDate());
         event.setLastUpdateTime(rs.getDate("LAST_UPDATETIME").toLocalDate());
-        event.setAttendees(retrieveLongList(rs,"ATTENDEES"));
-        event.setConfirmedAttendees(retrieveLongList(rs,"CONFIRMED_ATTENDEES"));
-        event.setTentativeAttendees(retrieveLongList(rs,"TENTATIVE_ATTENDEES"));
-        event.setDeclinedAttendees(retrieveLongList(rs,"DECLINED_ATTENDEES"));
-
         return event;
-    }
-
-    private List<Long> retrieveLongList(ResultSet rs, String column) throws SQLException {
-        Array array = rs.getArray(column);
-        if (array == null) {
-            return new ArrayList<>();
-        }
-
-        return Arrays.asList((Long[]) array.getArray());
     }
 }

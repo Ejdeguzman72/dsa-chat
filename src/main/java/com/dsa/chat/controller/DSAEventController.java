@@ -90,7 +90,7 @@ public class DSAEventController {
     @PostMapping(UriConstants.ADD_EVENT_INFO)
     @CrossOrigin
     public EventAddUpdateResponse addEventInfo(@RequestBody EventAddUpdateRequest request) {
-        return eventService.saveMessageInfo(request);
+        return eventService.createEvent(request);
     }
 
     @ApiOperation(value = AppConstants.UPDATE_EVENT_INFO)

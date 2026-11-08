@@ -63,19 +63,16 @@ public class EventService {
         return response;
     }
 
-    public EventAddUpdateResponse saveMessageInfo(EventAddUpdateRequest request) {
+    public EventAddUpdateResponse createEvent(EventAddUpdateRequest request) {
         EventAddUpdateResponse response = new EventAddUpdateResponse();
         int result = 0;
         if (request != null) {
             DSAEvent event = new DSAEvent();
+            event.setEventId(UUID.randomUUID());
             event.setEventName(request.getEventName());
             event.setEventType(request.getEventType());
             event.setDescription(request.getDescription());
             event.setEventDate(request.getEventDate());
-            event.setAttendees(request.getAttendees());
-            event.setConfirmedAttendees(request.getConfirmedAttendees());
-            event.setTentativeAttendees(request.getTentativeAttendees());
-            event.setDeclinedAttendees(request.getDeclinedAttendees());
             event.setCreateTime(LocalDate.now());
             event.setLastUpdateTime(LocalDate.now());
 
@@ -98,10 +95,6 @@ public class EventService {
             event.setEventType(request.getEventType());
             event.setDescription(request.getDescription());
             event.setEventDate(request.getEventDate());
-            event.setAttendees(request.getAttendees());
-            event.setConfirmedAttendees(request.getConfirmedAttendees());
-            event.setTentativeAttendees(request.getTentativeAttendees());
-            event.setDeclinedAttendees(request.getDeclinedAttendees());
             event.setCreateTime(LocalDate.now());
             event.setLastUpdateTime(LocalDate.now());
 

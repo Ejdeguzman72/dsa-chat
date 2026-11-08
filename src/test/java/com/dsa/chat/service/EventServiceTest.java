@@ -40,10 +40,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event);
 
         when(eventRepository.getAllEvents()).thenReturn(expected);
@@ -64,10 +61,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event);
 
         when(eventRepository.searchPastEvents()).thenReturn(expected);
@@ -88,10 +82,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event);
 
         when(eventRepository.searchUpcomingEvents()).thenReturn(expected);
@@ -112,10 +103,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event);
 
         when(eventRepository.getAllEvents()).thenReturn(expected);
@@ -136,10 +124,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
 
         UUID eventId = UUID.randomUUID();
 
@@ -161,10 +146,7 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
 
         when(eventRepository.searchDsaEventByName(eq("TEST EVENT NAME"))).thenReturn(event);
 
@@ -192,7 +174,7 @@ public class EventServiceTest {
                 .thenReturn(1);
 
         EventAddUpdateResponse result =
-                eventService.saveMessageInfo(request);
+                eventService.createEvent(request);
 
         assertNotNull(result);
         assertTrue(result.isSuccess());
@@ -224,7 +206,7 @@ public class EventServiceTest {
                 .thenReturn(1);
 
         EventAddUpdateResponse result =
-                eventService.saveMessageInfo(request);
+                eventService.createEvent(request);
 
         assertNotNull(result);
         assertTrue(result.isSuccess());
@@ -249,10 +231,6 @@ public class EventServiceTest {
         event.setEventType("TEST EVENT TYPE");
         event.setCreateTime(LocalDate.now());
         event.setLastUpdateTime(LocalDate.now());
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
 
         when(eventRepository.searchDsaEventById(eq(event.getEventId()))).thenReturn(event);
         when(eventRepository.deleteEvent(eq(event.getEventId()))).thenReturn(1);

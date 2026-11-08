@@ -35,10 +35,7 @@ public class EventRepositoryImplTest {
         event.setEventName("Test Event Name");
         event.setDescription("This is a test description for Test Event Name");
         event.setEventType("Test Event Type");
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         DSAEvent event2 = new DSAEvent();
         event2.setEventId(UUID.randomUUID());
         event2.setEventDate(LocalDate.now());
@@ -46,10 +43,7 @@ public class EventRepositoryImplTest {
         event2.setEventName("Test Event 2 Name");
         event2.setDescription("This is a test description for Test Event 2 Name");
         event2.setEventType("Test Event 2 Type");
-        event2.setAttendees(null);
-        event2.setConfirmedAttendees(null);
-        event2.setTentativeAttendees(null);
-        event2.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event,event2);
 
         when(jdbcTemplate.query(anyString(),eq(eventMapper))).thenReturn(expected);
@@ -68,10 +62,7 @@ public class EventRepositoryImplTest {
         event.setEventName("Test Event Name");
         event.setDescription("This is a test description for Test Event Name");
         event.setEventType("Test Event Type");
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         DSAEvent event2 = new DSAEvent();
         event2.setEventId(UUID.randomUUID());
         event2.setEventDate(LocalDate.parse("2021-01-01"));
@@ -79,10 +70,7 @@ public class EventRepositoryImplTest {
         event2.setEventName("Test Event 2 Name");
         event2.setDescription("This is a test description for Test Event 2 Name");
         event2.setEventType("Test Event 2 Type");
-        event2.setAttendees(null);
-        event2.setConfirmedAttendees(null);
-        event2.setTentativeAttendees(null);
-        event2.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event,event2);
 
         when(jdbcTemplate.query(anyString(),eq(eventMapper))).thenReturn(expected);
@@ -101,10 +89,7 @@ public class EventRepositoryImplTest {
         event.setEventName("Test Event Name");
         event.setDescription("This is a test description for Test Event Name");
         event.setEventType("Test Event Type");
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         DSAEvent event2 = new DSAEvent();
         event2.setEventId(UUID.randomUUID());
         event2.setEventDate(LocalDate.parse("2027-01-01"));
@@ -112,10 +97,7 @@ public class EventRepositoryImplTest {
         event2.setEventName("Test Event 2 Name");
         event2.setDescription("This is a test description for Test Event 2 Name");
         event2.setEventType("Test Event 2 Type");
-        event2.setAttendees(null);
-        event2.setConfirmedAttendees(null);
-        event2.setTentativeAttendees(null);
-        event2.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event,event2);
 
         when(jdbcTemplate.query(anyString(),eq(eventMapper))).thenReturn(expected);
@@ -134,10 +116,7 @@ public class EventRepositoryImplTest {
         event.setEventName("Test Event Name");
         event.setDescription("This is a test description for Test Event Name");
         event.setEventType("Test Event Type");
-        event.setAttendees(null);
-        event.setConfirmedAttendees(null);
-        event.setTentativeAttendees(null);
-        event.setDeclinedAttendees(null);
+
         DSAEvent event2 = new DSAEvent();
         event2.setEventId(UUID.randomUUID());
         event2.setEventDate(LocalDate.now());
@@ -145,10 +124,7 @@ public class EventRepositoryImplTest {
         event2.setEventName("Test Event 2 Name");
         event2.setDescription("This is a test description for Test Event 2 Name");
         event2.setEventType("Test Event 2 Type");
-        event2.setAttendees(null);
-        event2.setConfirmedAttendees(null);
-        event2.setTentativeAttendees(null);
-        event2.setDeclinedAttendees(null);
+
         List<DSAEvent> expected = List.of(event,event2);
 
         when(jdbcTemplate.query(anyString(),eq(eventMapper),eq("Test Event 2 Type"))).thenReturn(expected);
@@ -167,10 +143,7 @@ public class EventRepositoryImplTest {
         expected.setEventName("Test Event Name");
         expected.setDescription("This is a test description for Test Event Name");
         expected.setEventType("Test Event Type");
-        expected.setAttendees(null);
-        expected.setConfirmedAttendees(null);
-        expected.setTentativeAttendees(null);
-        expected.setDeclinedAttendees(null);
+
 
         when(jdbcTemplate.queryForObject(anyString(),eq(eventMapper),eq("Test Event Name"))).thenReturn(expected);
 
@@ -188,10 +161,6 @@ public class EventRepositoryImplTest {
         request.setEventName("Test Event Name");
         request.setDescription("This is a test description for Test Event Name");
         request.setEventType("Test Event Type");
-        request.setAttendees(null);
-        request.setConfirmedAttendees(null);
-        request.setTentativeAttendees(null);
-        request.setDeclinedAttendees(null);
 
         when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);
 
@@ -209,10 +178,7 @@ public class EventRepositoryImplTest {
         request.setEventName("Test Event Name");
         request.setDescription("This is a test description for Test Event Name");
         request.setEventType("Test Event Type");
-        request.setAttendees(null);
-        request.setConfirmedAttendees(null);
-        request.setTentativeAttendees(null);
-        request.setDeclinedAttendees(null);
+
 
         when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);
 

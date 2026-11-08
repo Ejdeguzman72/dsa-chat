@@ -20,10 +20,10 @@ public class DSAEvent {
     LocalDate eventDate;
     LocalDate createTime;
     LocalDate lastUpdateTime;
-    List<Long> attendees;
-    List<Long> confirmedAttendees;
-    List<Long> tentativeAttendees;
-    List<Long> declinedAttendees;
+//    List<Long> attendees;
+//    List<Long> confirmedAttendees;
+//    List<Long> tentativeAttendees;
+//    List<Long> declinedAttendees;
 
     public UUID getEventId() {
         return eventId;
@@ -81,35 +81,35 @@ public class DSAEvent {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public List<Long> getAttendees() {
-        return attendees;
-    }
-
-    public void setAttendees(List<Long> attendees) {
-        this.attendees = attendees;
-    }
-
-    public List<Long> getConfirmedAttendees() {
-        return confirmedAttendees;
-    }
-
-    public void setConfirmedAttendees(List<Long> confirmedAttendees) {
-        this.confirmedAttendees = confirmedAttendees;
-    }
-
-    public List<Long> getTentativeAttendees() {
-        return tentativeAttendees;
-    }
-
-    public void setTentativeAttendees(List<Long> tentativeAttendees) {
-        this.tentativeAttendees = tentativeAttendees;
-    }
-
-    public List<Long> getDeclinedAttendees() {
-        return declinedAttendees;
-    }
-
-    public void setDeclinedAttendees(List<Long> declinedAttendees) {
-        this.declinedAttendees = declinedAttendees;
-    }
+//    public List<Long> getAttendees() {
+//        return attendees;
+//    }
+//
+//    public void setAttendees(List<Long> attendees) {
+//        this.attendees = attendees;
+//    }
+//
+//    public List<Long> getConfirmedAttendees() {
+//        return confirmedAttendees;
+//    }
+//
+//    public void setConfirmedAttendees(List<Long> confirmedAttendees) {
+//        this.confirmedAttendees = confirmedAttendees;
+//    }
+//
+//    public List<Long> getTentativeAttendees() {
+//        return tentativeAttendees;
+//    }
+//
+//    public void setTentativeAttendees(List<Long> tentativeAttendees) {
+//        this.tentativeAttendees = tentativeAttendees;
+//    }
+//
+//    public List<Long> getDeclinedAttendees() {
+//        return declinedAttendees;
+//    }
+//
+//    public void setDeclinedAttendees(List<Long> declinedAttendees) {
+//        this.declinedAttendees = declinedAttendees;
+//    }
 }
