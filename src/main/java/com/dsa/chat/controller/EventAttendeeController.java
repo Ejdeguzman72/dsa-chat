@@ -41,7 +41,7 @@ public class EventAttendeeController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @PostMapping(value = UriConstants.SAVE_ATTENDANCE)
+    @PostMapping(value = UriConstants.UPDATE_ATTENDANCE)
     @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
     public EventAttendeeAddUpdateResponse updateAttendance(EventAttendeeAddUpdateRequest request) {
         return eventAttendeeService.updateAttendance(request);
