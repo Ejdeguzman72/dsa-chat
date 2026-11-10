@@ -15,24 +15,23 @@ import java.util.List;
 public class DsaUserRepositoryImpl implements DsaUserRepository {
     private final JdbcTemplate jdbcTemplate;
     private final DSAUserMapper dsaUserMapper;
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(DsaUserRepositoryImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DsaUserRepositoryImpl.class);
     public static final String RETRIEVE_ALL_USERS =
             "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME," +
-                    "DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME " +
+                    "DESCRIPTION,INTERESTS,ROLE_ID,CREATION_DATE,LAST_UPDATETIME " +
                     "FROM DSA_USER";
     public static final String RETRIEVE_USER_BY_ID =
             "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME," +
-                    "DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME " +
+                    "DESCRIPTION,INTERESTS,ROLE_ID,CREATION_DATE,LAST_UPDATETIME " +
                     "FROM DSA_USER WHERE USER_ID = ?";
     public static final String RETRIEVE_USER_BY_USERNAME =
             "SELECT USER_ID,USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME," +
-                    "DESCRIPTION,INTERESTS,CREATION_DATE,LAST_UPDATETIME " +
+                    "DESCRIPTION,INTERESTS,ROLE_ID,CREATION_DATE,LAST_UPDATETIME " +
                     "FROM DSA_USER WHERE USERNAME = ?";
     public static final String REGISTER_NEW_DSA_USER =
             "INSERT INTO DSA_USER " +
                     "(USERNAME,PASSWORD,EMAIL,FIRSTNAME,LASTNAME,DESCRIPTION," +
-                    "INTERESTS,CREATION_DATE,LAST_UPDATETIME) " +
+                    "INTERESTS,ROLE_ID,CREATION_DATE,LAST_UPDATETIME) " +
                     "VALUES(?,?,?,?,?,?,?,?,?)";
     public static final String UPDATE_DSA_USER_INFO =
             "UPDATE DSA_USER SET " +
@@ -42,6 +41,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
                     "LASTNAME = ?, " +
                     "DESCRIPTION = ?, " +
                     "INTERESTS = ?, " +
+                    "ROLE_ID = ?, " +
                     "CREATION_DATE = ?, " +
                     "LAST_UPDATETIME = ? " +
                     "WHERE USER_ID = ?";
@@ -53,11 +53,9 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
     public DsaUserRepositoryImpl(
             JdbcTemplate jdbcTemplate,
             DSAUserMapper dsaUserMapper) {
-
         this.jdbcTemplate = jdbcTemplate;
         this.dsaUserMapper = dsaUserMapper;
     }
-
 
     @Override
     public List<DsaUser> retrieveAllUsers() {
@@ -95,6 +93,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
                             request.getLastname(),
                             request.getDescription(),
                             request.getInterests(),
+                            request.getRoleId(),
                             LocalDate.now(),
                             LocalDate.now()
                     }
@@ -117,6 +116,7 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
             dsaUser.setLastname(request.getLastname());
             dsaUser.setDescription(request.getDescription());
             dsaUser.setInterests(request.getInterests());
+            dsaUser.setRoleId(request.getRoleId());
             dsaUser.setCreationDate(LocalDate.now());
             dsaUser.setLastUpdatetime(LocalDate.now());
 
@@ -129,15 +129,14 @@ public class DsaUserRepositoryImpl implements DsaUserRepository {
                             dsaUser.getLastname(),
                             dsaUser.getDescription(),
                             dsaUser.getInterests(),
+                            dsaUser.getRoleId(),
                             dsaUser.getCreationDate(),
                             dsaUser.getLastUpdatetime(),
                             dsaUser.getUserId()
                     }
             );
-            LOGGER.info(
-                    "Updating dsa user with ID: {}",
-                    request.getUserId()
-            );
+
+            LOGGER.info("Updating dsa user with ID: {}", request.getUserId());
         }
 
         return result;

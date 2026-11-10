@@ -46,7 +46,7 @@ public class ChatMessageService {
         if (request != null) {
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setContent(request.getContent());
-            chatMessage.setDsaUser(request.getDsaUser());
+            chatMessage.setUserId(request.getUserId());
             chatMessage.setSentDatetime(LocalDateTime.now());
             result = chatMessageRepository.addNewMessage(chatMessage);
             if (result > 0) {
@@ -65,7 +65,7 @@ public class ChatMessageService {
             chatMessage.setChatMessageId(request.getChatMessageId());
             chatMessage.setContent(request.getContent());
             chatMessage.setSentDatetime(LocalDateTime.now());
-            chatMessage.setDsaUser(request.getDsaUser());
+            chatMessage.setUserId(request.getUserId());
             result = chatMessageRepository.updateMessage(request);
             if (result > 0) {
                 response.setChatMessage(chatMessage);

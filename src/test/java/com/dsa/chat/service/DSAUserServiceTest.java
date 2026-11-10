@@ -74,7 +74,7 @@ public class DSAUserServiceTest {
         UserSearchResponse result = dsaUserService.retrieveUserByUsername(anyString());
 
         assertNotNull(result);
-        assertEquals(expected, result.getAuthInfo());
+        assertEquals(expected, result.getUser());
     }
 
     @Test
@@ -123,22 +123,6 @@ public class DSAUserServiceTest {
                 dsaUserService.updateDSAUserInfo(registerRequest);
 
         assertNotNull(result);
-//        assertNotNull(result.getDsaUser());
-//
-//        assertEquals(expected.getUsername(),
-//                result.getDsaUser().getUsername());
-//
-//        assertEquals(expected.getEmail(),
-//                result.getDsaUser().getEmail());
-//
-//        assertEquals(expected.getFirstname(),
-//                result.getDsaUser().getFirstname());
-//
-//        assertEquals(expected.getLastname(),
-//                result.getDsaUser().getLastname());
-//
-//        assertEquals(LocalDate.now(),
-//                result.getDsaUser().getLastUpdatetime());
 
         verify(dsaUserRepository, times(1))
                 .updateDsaUser(registerRequest);

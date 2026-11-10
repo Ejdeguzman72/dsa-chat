@@ -11,7 +11,9 @@ public class ChatMessage {
     long chatMessageId;
     String content;
     LocalDateTime sentDatetime;
-    DsaUser dsaUser;
+    long userId;
+    LocalDateTime createTime;
+    LocalDateTime lastUpdateTime;
     public long getChatMessageId() {
         return chatMessageId;
     }
@@ -30,10 +32,22 @@ public class ChatMessage {
     public void setSentDatetime(LocalDateTime sentDatetime) {
         this.sentDatetime = sentDatetime;
     }
-    public DsaUser getDsaUser() {
-        return dsaUser;
+    public long getUserId() {
+        return userId;
     }
-    public void setDsaUser(DsaUser dsaUser) {
-        this.dsaUser = dsaUser;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+    public LocalDateTime getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+    public void setLastUpdateTime(LocalDateTime lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 }

@@ -10,10 +10,9 @@ public class UriConstants {
 
     public static final String GET_ALL_USERS = "/users/all";
     public static final String GET_USER_BY_ID = "/users/search/id/{userId}";
-    public static final String DELETE_USER_BBY_ID = "/user/delete/{userId}";
-    public static final String RETRIEVE_USERNAME = "/users/user/username";
     public static final String GET_USER_BY_USERNAME = "/users/search/username/{username}";
     public static final String UPDATE_DSA_USER_INFO = "/users/update";
+    public static final String DELETE_USER_BY_ID = "/users/delete/{userId}";
 
     public static final String GET_ALL_MESSAGES ="/chat/all";
     public static final String GET_MESSAGES_BY_USER="/chat/all/user/{userId}";
@@ -30,7 +29,7 @@ public class UriConstants {
     public static final String GET_EVENT_BY_NAME = "/events/search/name/{eventName}";
     public static final String ADD_EVENT_INFO = "/events/add";
     public static final String UPDATE_EVENT_INFO = "/events/update";
-    public static final String DELETE_EVENT_INFO = "events/delete/{eventId}";
+    public static final String DELETE_EVENT_INFO = "/events/delete/{eventId}";
 
     public static final String RETRIEVE_ATTENDEES_BY_EVENT = "/event-attendees/search/event/{eventId}";
     public static final String SAVE_ATTENDANCE = "/event-attendees/save-attendance";

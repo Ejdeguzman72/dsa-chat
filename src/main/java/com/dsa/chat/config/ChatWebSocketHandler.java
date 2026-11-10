@@ -24,30 +24,20 @@ import java.util.concurrent.RejectedExecutionException;
 
 @Component
 public class ChatWebSocketHandler extends TextWebSocketHandler {
-
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(ChatWebSocketHandler.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatWebSocketHandler.class);
     private final ChatMessageService chatMessageService;
     private final DsaUserService userService;
     private final AIChatService aiChatService;
-
-    private final Set<WebSocketSession> sessions =
-            ConcurrentHashMap.newKeySet();
-
-    private final ExecutorService executorService =
-            Executors.newFixedThreadPool(4);
-
+    private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
+    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
     public ChatWebSocketHandler(
             ChatMessageService chatMessageService,
             DsaUserService userService,
             AIChatService aiChatService) {
-
         this.chatMessageService = chatMessageService;
         this.userService = userService;
         this.aiChatService = aiChatService;
     }
-
     private String getUsername(WebSocketSession session) {
         return (String) session.getAttributes().get("username");
     }
@@ -92,7 +82,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         UserSearchResponse user =
                 userService.retrieveUserByUsername(username);
 
-        if (user == null || user.getAuthInfo() == null) {
+        if (user == null) {
             LOGGER.warn("User not found: {}", username);
             session.close(CloseStatus.POLICY_VIOLATION);
             return;
@@ -101,7 +91,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         // Save user message to database
         ChatMessageAddUpdateRequest request = new ChatMessageAddUpdateRequest();
 
-        request.setDsaUser(user.getAuthInfo());
+        request.setUserId(user.getUser().getUserId());
         request.setContent(payload);
         request.setSentDatetime(LocalDateTime.now());
 

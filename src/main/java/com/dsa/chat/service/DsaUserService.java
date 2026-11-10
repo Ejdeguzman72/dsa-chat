@@ -2,6 +2,7 @@ package com.dsa.chat.service;
 
 import com.dsa.chat.domain.*;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
+import com.dsa.chat.repository.RoleRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +15,8 @@ import java.util.List;
 public class DsaUserService {
     @Autowired
     private DsaUserRepositoryImpl dsaUserRepository;
+    @Autowired
+    private RoleRepositoryImpl roleRepository;
     @Autowired
     public PasswordEncoder passwordEncoder;
 
@@ -34,7 +37,7 @@ public class DsaUserService {
     public UserSearchResponse retrieveUserByUsername(String username) {
         UserSearchResponse response = new UserSearchResponse();
         DsaUser authUserInfo = dsaUserRepository.retrieveUserByUsername(username);
-        response.setAuthInfo(authUserInfo);
+        response.setUser(authUserInfo);
         return response;
     }
 
@@ -87,6 +90,7 @@ public class DsaUserService {
         dsaUser.setLastname(request.getLastname());
         dsaUser.setDescription(request.getDescription());
         dsaUser.setInterests(request.getInterests());
+        dsaUser.setRoleId(AppConstants.DSA_USER_ROLE_ID);
         dsaUser.setCreationDate(LocalDate.now());
         dsaUser.setLastUpdatetime(LocalDate.now());
 

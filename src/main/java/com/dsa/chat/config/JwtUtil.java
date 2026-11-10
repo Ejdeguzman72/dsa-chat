@@ -26,7 +26,7 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        final long EXPIRATION_TIME = 1000L * 60 * 15;
+        final long EXPIRATION_TIME = 1000L * 60 * 30;
         return Jwts.builder()
                 .setClaims(claims) // Include claims
                 .setSubject(subject) // Include subject (username)

@@ -1,7 +1,9 @@
 package com.dsa.chat.service;
 
 import com.dsa.chat.domain.DsaUser;
+import com.dsa.chat.domain.Role;
 import com.dsa.chat.repository.DsaUserRepositoryImpl;
+import com.dsa.chat.repository.RoleRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +21,8 @@ import static org.mockito.Mockito.when;
 public class DsaUserDetailsServiceTest {
     @Mock
     private DsaUserRepositoryImpl dsaUserRepository;
+    @Mock
+    private RoleRepositoryImpl roleRepository;
     @InjectMocks
     private DSAUserDetailsService dsaUserDetailsService;
 
@@ -32,12 +36,17 @@ public class DsaUserDetailsServiceTest {
         expected.setDescription("THIS IS A TEST DESCRIPTION");
         expected.setInterests(null);
         expected.setEmail("123@gmail.com");
-
+        expected.setRoleId(3000);
         expected.setUserId(1000);
         expected.setCreationDate(LocalDate.now());
         expected.setLastUpdatetime(LocalDate.now());
 
+        Role role = new Role();
+        role.setId(3000L);
+        role.setName("ADMIN");
+
         when(dsaUserRepository.retrieveUserByUsername("TEST USERNAME")).thenReturn(expected);
+        when(roleRepository.searchRoleById(3000)).thenReturn(role);
 
         UserDetails result = dsaUserDetailsService.loadUserByUsername("TEST USERNAME");
 

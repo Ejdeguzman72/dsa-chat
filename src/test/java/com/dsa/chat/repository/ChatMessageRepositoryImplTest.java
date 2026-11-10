@@ -83,7 +83,7 @@ public class ChatMessageRepositoryImplTest {
         dsaUser.setUserId(1500);
         dsaUser.setUsername("testuser");
         dsaUser.setPassword("testpassword");
-        expected.setDsaUser(dsaUser);
+        expected.setUserId(1000);
 
         when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);
 
@@ -103,14 +103,14 @@ public class ChatMessageRepositoryImplTest {
         dsaUser.setUserId(1500);
         dsaUser.setUsername("testuser");
         dsaUser.setPassword("testpassword");
-        existing.setDsaUser(dsaUser);
+        existing.setUserId(1000);
 
         ChatMessage request = new ChatMessage();
         request.setChatMessageId(1000);
         request.setContent("This is another test test content, this is another test content");
         request.setSentDatetime(LocalDateTime.now());
 
-        request.setDsaUser(dsaUser);
+        request.setUserId(10000);
 
         when(jdbcTemplate.queryForObject(anyString(),eq(chatMessageMapper),eq(1000L))).thenReturn(existing);
         when(jdbcTemplate.update(anyString(),any(Object[].class))).thenReturn(1);

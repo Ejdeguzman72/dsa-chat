@@ -48,4 +48,6 @@ public class AppConstants {
     public static final String CREATE_ANNOUNCEMENT = "CREATE_ANNOUNCEMENT";
     public static final String UPDATE_ANNOUNCEMENT = "UPDATE_ANNOUNCEMENT";
     public static final String DELETE_ANNOUNCEMENT = "DELETE_ANNOUNCEMENT";
+
+    public static final long DSA_USER_ROLE_ID = 1000;
 }

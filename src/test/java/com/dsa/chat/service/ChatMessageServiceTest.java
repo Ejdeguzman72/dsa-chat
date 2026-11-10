@@ -37,7 +37,7 @@ public class ChatMessageServiceTest {
         user.setCreationDate(LocalDate.now());
         user.setLastUpdatetime(LocalDate.now());
 
-        testData.setDsaUser(user);
+        testData.setUserId(1L);
         testData.setContent("This is test content. This is a test message for junit test. ");
         testData.setSentDatetime(LocalDateTime.now());
     }
@@ -85,7 +85,7 @@ public class ChatMessageServiceTest {
 
         request.setChatMessageId(testData.getChatMessageId());
         request.setContent(testData.getContent());
-        request.setDsaUser(testData.getDsaUser());
+        request.setUserId(testData.getUserId());
         request.setSentDatetime(testData.getSentDatetime());
 
         when(chatMessageRepository.addNewMessage(any(ChatMessage.class))).thenReturn(1);

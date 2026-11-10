@@ -110,7 +110,7 @@ public class DsaUserController {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
-    @PutMapping(value = UriConstants.DELETE_USER_BBY_ID)
+    @DeleteMapping(value = UriConstants.DELETE_USER_BY_ID)
     @CrossOrigin(origins = AppConstants.CROSS_ORIGIN_ALL_ORIGINS, maxAge = AppConstants.CROSS_ORIGIN_MAX_AGE)
     public UserSearchResponse deleteDSAUserInfo(@PathVariable long userId) {
         return dsaUserService.deleteUserById(userId);

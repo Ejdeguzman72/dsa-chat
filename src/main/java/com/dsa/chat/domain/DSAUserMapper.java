@@ -19,6 +19,7 @@ public class DSAUserMapper implements RowMapper<DsaUser> {
         dsaUser.setLastname(rs.getString("LASTNAME"));
         dsaUser.setEmail(rs.getString("EMAIL"));
         dsaUser.setDescription(rs.getString("DESCRIPTION"));
+        dsaUser.setRoleId(rs.getLong("ROLE_ID"));
         dsaUser.setCreationDate(rs.getDate("CREATION_DATE").toLocalDate());
         dsaUser.setLastUpdatetime(rs.getDate("LAST_UPDATETIME").toLocalDate());
         return dsaUser;

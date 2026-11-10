@@ -2,6 +2,8 @@ package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.ChatMessageMapper;
 import com.dsa.chat.domain.ChatMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +17,7 @@ import java.util.List;
 public class ChatMessageRepositoryImpl implements ChatMessageRepository {
     private JdbcTemplate jdbcTemplate;
     private ChatMessageMapper chatMessageMapper;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatMessageRepositoryImpl.class);
     @Autowired
     public ChatMessageRepositoryImpl(
             JdbcTemplate jdbcTemplate,
@@ -26,7 +29,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
     public static final String GET_ALL_MESSAGES = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE ORDER BY SENT_DATETIME DESC";
     public static final String GET_ALL_MESSAGES_BY_USER_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE USER_ID = ?";
     public static final String GET_MESSAGE_BY_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE CHAT_MESSAGE_ID = ?";
-    public static final String ADD_NEW_CHAT_MSG = "INSERT INTO CHAT_MESSAGE(CONTENT, SENT_DATETIME, USER_ID) VALUES (?,?,?)";
+    public static final String ADD_NEW_CHAT_MSG = "INSERT INTO CHAT_MESSAGE(CONTENT,SENT_DATETIME,USER_ID) VALUES (?,?,?)";
     public static final String UPDATE_CHAT_MESSAGE = "UPDATE CHAT_MESSAGE SET CONTENT = ?, SENT_DATETIME = ? WHERE USER_ID = ?";
     public static final String DELETE_CHAT_MESSAGE = "DELETE FROM CHAT_MESSAGE WHERE USER_ID = ?";
     @Override
@@ -47,7 +50,7 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
             ChatMessage chatMessage = jdbcTemplate.queryForObject(GET_MESSAGE_BY_ID,chatMessageMapper,chatMessageId);
             return chatMessage;
         } catch (EmptyResultDataAccessException e) {
-            System.out.println(e);
+            LOGGER.error("Error retrieving chat message - " + chatMessageId,e);
         }
 
         return null;
@@ -60,12 +63,12 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.setContent(request.getContent());
             chatMessage.setSentDatetime(request.getSentDatetime());
-            chatMessage.setDsaUser(request.getDsaUser());
+
 
             result = jdbcTemplate.update(ADD_NEW_CHAT_MSG,new Object[]{
                     request.getContent(),
                     request.getSentDatetime(),
-                    request.getDsaUser().getUserId()
+                    request.getUserId()
             });
         }
 
