@@ -1,6 +1,7 @@
 
 package com.dsa.chat.config;
 
+import com.dsa.chat.domain.AppConstants;
 import com.dsa.chat.domain.UriConstants;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -68,36 +69,36 @@ public class WebSecurityConfig {
                         .requestMatchers(
                                 UriConstants.AUTHORIZED_REQUESTS_PATH
                         ).permitAll()
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_USERS).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_USER_BY_ID).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_USER_BY_USERNAME).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_DSA_USER_INFO).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_USER_BY_ID).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_USERS).hasRole(AppConstants.DSA_ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_USER_BY_ID).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_USER_BY_USERNAME).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_DSA_USER_INFO).hasRole(AppConstants.DSA_ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_USER_BY_ID).hasRole(AppConstants.DSA_ADMIN_ROLE)
 
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_MESSAGES).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_MESSAGES_BY_USER).hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_MESSAGE_BY_ID).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.POST,UriConstants.SAVE_MESSAGE_INFO).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_MESSAGE_INFO).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_MESSAGE).hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_MESSAGES).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_MESSAGES_BY_USER).hasRole(AppConstants.DSA_ADMIN_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_MESSAGE_BY_ID).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.POST,UriConstants.SAVE_MESSAGE_INFO).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_MESSAGE_INFO).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_MESSAGE).hasRole(AppConstants.DSA_ADMIN_ROLE)
 
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_EVENTS).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_PAST_EVENTS).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_UPCOMING_EVENTS).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_EVENT_BY_ID).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_EVENT_BY_NAME).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.POST,UriConstants.ADD_EVENT_INFO).hasAnyRole("ADMIN","MODERATOR")
-                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_EVENT_INFO).hasAnyRole("ADMIN","MODERATOR")
-                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_EVENT_INFO).hasAnyRole("ADMIN","MODERATOR")
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_EVENTS).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_PAST_EVENTS).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_UPCOMING_EVENTS).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_EVENT_BY_ID).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_EVENT_BY_NAME).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.POST,UriConstants.ADD_EVENT_INFO).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
+                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_EVENT_INFO).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
+                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_EVENT_INFO).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
 
-                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_ANNOUNCEMENTS).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.POST,UriConstants.CREATE_ANNOUNCEMENT).hasAnyRole("ADMIN","MODERATOR")
-                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_ANNOUNCEMENT).hasAnyRole("ADMIN","MODERATOR")
-                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_ANNOUNCEMENT).hasAnyRole("ADMIN","MODERATOR")
+                        .requestMatchers(HttpMethod.GET,UriConstants.GET_ALL_ANNOUNCEMENTS).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.POST,UriConstants.CREATE_ANNOUNCEMENT).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
+                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_ANNOUNCEMENT).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
+                        .requestMatchers(HttpMethod.DELETE,UriConstants.DELETE_ANNOUNCEMENT).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE)
 
-                        .requestMatchers(HttpMethod.GET,UriConstants.RETRIEVE_ATTENDEES_BY_EVENT).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.POST,UriConstants.SAVE_ATTENDANCE).hasAnyRole("ADMIN","MODERATOR","USER")
-                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_ATTENDANCE).hasAnyRole("ADMIN","MODERATOR","USER")
+                        .requestMatchers(HttpMethod.GET,UriConstants.RETRIEVE_ATTENDEES_BY_EVENT).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.POST,UriConstants.SAVE_ATTENDANCE).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
+                        .requestMatchers(HttpMethod.PUT,UriConstants.UPDATE_ATTENDANCE).hasAnyRole(AppConstants.DSA_ADMIN_ROLE,AppConstants.DSA_MODERATOR_ROLE,AppConstants.DSA_USER_ROLE)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

@@ -50,4 +50,7 @@ public class AppConstants {
     public static final String DELETE_ANNOUNCEMENT = "DELETE_ANNOUNCEMENT";
 
     public static final long DSA_USER_ROLE_ID = 1000;
+    public static final String DSA_ADMIN_ROLE = "ADMIN";
+    public static final String DSA_MODERATOR_ROLE = "MODERATOR";
+    public static final String DSA_USER_ROLE = "USER";
 }
