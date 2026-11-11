@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @CrossOrigin
 public class Announcement {
     long announcementId;
+    String title;
     String content;
     LocalDateTime sentDatetime;
     LocalDateTime creationDate;
@@ -20,6 +21,14 @@ public class Announcement {
 
     public void setAnnouncementId(long announcementId) {
         this.announcementId = announcementId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

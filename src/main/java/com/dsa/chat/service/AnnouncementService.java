@@ -34,6 +34,7 @@ public class AnnouncementService {
         int result = 0;
         if (request != null) {
             Announcement announcement = new Announcement();
+            announcement.setTitle(request.getTitle());
             announcement.setContent(request.getContent());
             announcement.setSentDatetime(LocalDateTime.now());
             announcement.setCreationDate(LocalDateTime.now());
@@ -53,6 +54,7 @@ public class AnnouncementService {
         int result = 0;
         if (request != null) {
             Announcement announcement = new Announcement();
+            announcement.setTitle(request.getTitle());
             announcement.setContent(request.getContent());
             announcement.setSentDatetime(LocalDateTime.now());
             announcement.setCreationDate(LocalDateTime.now());

@@ -2,7 +2,6 @@ package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.Announcement;
 import com.dsa.chat.domain.AnnouncementMapper;
-import com.dsa.chat.domain.ChatMessageMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +14,8 @@ import java.util.List;
 @Repository
 public class AnnouncementRepositoryImpl {
 
-    private JdbcTemplate jdbcTemplate;
-    private AnnouncementMapper announcementMapper;
+    private final JdbcTemplate jdbcTemplate;
+    private final AnnouncementMapper announcementMapper;
     @Autowired
     public AnnouncementRepositoryImpl(
             JdbcTemplate jdbcTemplate,
@@ -27,11 +26,11 @@ public class AnnouncementRepositoryImpl {
     }
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnouncementRepositoryImpl.class);
 
-    public static final String RETRIEVE_ALL_ANNOUNCEMENTS = "SELECT ANNOUNCEMENT_ID, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT";
-    public static final String RETRIEVE_ANNOUNCEMENT_BY_ID = "SELECT ANNOUNCEMENT_ID, CONTENT, SENT_DATETIME FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
-    public static final String CREATE_ANNOUNCEMENT = "INSERT INTO ANNOUNCEMENT (CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME) VALUES (?,?,?,?)";
+    public static final String RETRIEVE_ALL_ANNOUNCEMENTS = "SELECT ANNOUNCEMENT_ID, TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT";
+    public static final String RETRIEVE_ANNOUNCEMENT_BY_ID = "SELECT ANNOUNCEMENT_ID, TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
+    public static final String CREATE_ANNOUNCEMENT = "INSERT INTO ANNOUNCEMENT (TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME) VALUES (?,?,?,?,?)";
     public static final String UPDATE_ANNOUNCEMENT = "UPDATE ANNOUNCEMENT SET CONTENT = ? WHERE ANNOUNCEMENT_ID = ?";
-    public static final String DELETE_ANNOUNCEMENT = "DELETE ANNOUNCEMENT FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
+    public static final String DELETE_ANNOUNCEMENT = "DELETE FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
 
     public List<Announcement> retrieveAllAnnouncements() {
         return jdbcTemplate.query(RETRIEVE_ALL_ANNOUNCEMENTS,announcementMapper);
@@ -45,12 +44,14 @@ public class AnnouncementRepositoryImpl {
         int result = 0;
         if (announcement != null) {
             Announcement request = new Announcement();
+            request.setTitle(announcement.getTitle());
             request.setContent(announcement.getContent());
             request.setSentDatetime(announcement.getSentDatetime());
             request.setCreationDate(announcement.getCreationDate());
             request.setUpdateDateTime(announcement.getUpdateDateTime());
 
             result = jdbcTemplate.update(CREATE_ANNOUNCEMENT,new Object[] {
+                    request.getTitle(),
                     request.getContent(),
                     LocalDateTime.now(),
                     LocalDateTime.now(),
@@ -66,6 +67,7 @@ public class AnnouncementRepositoryImpl {
         Announcement existingAnnouncement = retrieveAnnouncement(announcement.getAnnouncementId());
         if (existingAnnouncement != null) {
             Announcement request = new Announcement();
+            request.setTitle(announcement.getTitle());
             request.setContent(announcement.getContent());
             request.setSentDatetime(announcement.getSentDatetime());
             request.setCreationDate(announcement.getCreationDate());
