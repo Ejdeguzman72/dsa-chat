@@ -1,10 +1,6 @@
 package com.dsa.chat.service;
 
-import com.dsa.chat.domain.ChatMessageAddUpdateRequest;
-import com.dsa.chat.domain.ChatMessageAddUpdateResponse;
-import com.dsa.chat.domain.ChatMessageListResponse;
-import com.dsa.chat.domain.ChatMessageSearchResponse;
-import com.dsa.chat.domain.ChatMessage;
+import com.dsa.chat.domain.*;
 import com.dsa.chat.repository.ChatMessageRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +25,13 @@ public class ChatMessageService {
         List<ChatMessage> list = chatMessageRepository.retrieveAllMessagesByUserId(userId);
 
         response.setSuccess(true);
+        response.setList(list);
+        return response;
+    }
+    public ChatMessageDTOListResponse getAllChatMessageDTOEntries() {
+        ChatMessageDTOListResponse response = new ChatMessageDTOListResponse();
+        List<ChatMessageDTO> list = chatMessageRepository.retrieveChatMessageDtoList();
+
         response.setList(list);
         return response;
     }

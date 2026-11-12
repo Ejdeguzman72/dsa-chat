@@ -1,5 +1,7 @@
 package com.dsa.chat.repository;
 
+import com.dsa.chat.domain.ChatMessageDTO;
+import com.dsa.chat.domain.ChatMessageDTOMapper;
 import com.dsa.chat.domain.ChatMessageMapper;
 import com.dsa.chat.domain.ChatMessage;
 import org.slf4j.Logger;
@@ -12,21 +14,25 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 
 @Repository
 public class ChatMessageRepositoryImpl implements ChatMessageRepository {
     private JdbcTemplate jdbcTemplate;
-    private ChatMessageMapper chatMessageMapper;
+    private final ChatMessageMapper chatMessageMapper;
+    private final ChatMessageDTOMapper chatMessageDTOMapper;
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatMessageRepositoryImpl.class);
     @Autowired
     public ChatMessageRepositoryImpl(
             JdbcTemplate jdbcTemplate,
-            ChatMessageMapper chatMessageMapper) {
+            ChatMessageMapper chatMessageMapper, ChatMessageDTOMapper chatMessageDTOMapper) {
 
         this.jdbcTemplate = jdbcTemplate;
         this.chatMessageMapper = chatMessageMapper;
+        this.chatMessageDTOMapper = chatMessageDTOMapper;
     }
     public static final String GET_ALL_MESSAGES = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE ORDER BY SENT_DATETIME DESC";
+    public static final String GET_CHAT_MESSAGE_DTO_LIST = "SELECT CHAT_MESSAGE_ID,CONTENT,SENT_DATETIME,USERNAME FROM CHAT_MESSAGE CM INNER JOIN DSA_USER DU ON CM.USER_ID = DU.USER_ID";
     public static final String GET_ALL_MESSAGES_BY_USER_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE USER_ID = ?";
     public static final String GET_MESSAGE_BY_ID = "SELECT CHAT_MESSAGE_ID,SENDER,CONTENT,SENT_DATETIME,USER_ID FROM CHAT_MESSAGE WHERE CHAT_MESSAGE_ID = ?";
     public static final String ADD_NEW_CHAT_MSG = "INSERT INTO CHAT_MESSAGE(CONTENT,SENT_DATETIME,USER_ID) VALUES (?,?,?)";
@@ -37,6 +43,11 @@ public class ChatMessageRepositoryImpl implements ChatMessageRepository {
         List<ChatMessage> list = new ArrayList<>();
         list = jdbcTemplate.query(GET_ALL_MESSAGES,chatMessageMapper);
         return list;
+    }
+
+    @Override
+    public List<ChatMessageDTO> retrieveChatMessageDtoList() {
+        return jdbcTemplate.query(GET_CHAT_MESSAGE_DTO_LIST,chatMessageDTOMapper);
     }
 
     @Override

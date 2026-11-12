@@ -25,6 +25,17 @@ public class ChatMessageController {
         return chatMessageService.getAllChatMessages();
     }
 
+    @ApiOperation(value = AppConstants.GET_MESSAGE_DTO_LIST)
+    @ApiResponses(value = {
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INVALID, message = AppConstants.API_RESPONSE_INVALID),
+            @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_INTERNAL_SERVER_ERROR, message = AppConstants.API_RESPONSE_INTERNAL_SERVER_ERROR)})
+    @GetMapping(UriConstants.GET_ALL_MESSAGE_DTO_ENTRIES)
+    @CrossOrigin(origins = "*")
+    public ChatMessageDTOListResponse getAllChatMessageDTOEntries() {
+        return chatMessageService.getAllChatMessageDTOEntries();
+    }
+
     @ApiOperation(value = AppConstants.GET_ALL_MESSAGES_BY_USER)
     @ApiResponses(value = {
             @ApiResponse(code = AppConstants.API_RESPONSE_HTTP_STATUS_OK, message = AppConstants.API_RESPONSE_OK),

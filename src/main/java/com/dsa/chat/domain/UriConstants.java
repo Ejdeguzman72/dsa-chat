@@ -15,6 +15,7 @@ public class UriConstants {
     public static final String DELETE_USER_BY_ID = "/users/delete/{userId}";
 
     public static final String GET_ALL_MESSAGES ="/chat/all";
+    public static final String GET_ALL_MESSAGE_DTO_ENTRIES = "/chat/all/dto";
     public static final String GET_MESSAGES_BY_USER="/chat/all/user/{userId}";
     public static final String GET_MESSAGE_BY_ID="/chat/search/chatMessageId/{chatMessageId}";
     public static final String SAVE_MESSAGE_INFO="/chat/save-message";

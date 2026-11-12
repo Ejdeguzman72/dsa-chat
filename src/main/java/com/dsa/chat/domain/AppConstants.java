@@ -23,6 +23,7 @@ public class AppConstants {
     public static final String API_OPERATION_DELETE_DSA_USER = "DELETE_DSA_USER";
 
     public static final String GET_ALL_MESSAGES = "GET_ALL_MESSAGES";
+    public static final String GET_MESSAGE_DTO_LIST = "GET_MESSAGE_DTO_LIST";
     public static final String GET_ALL_MESSAGES_BY_USER = "GET_ALL_MESSAGES_BY_USER";
     public static final String GET_MESSAGE_BY_ID = "GET_MESSAGE_BY_ID";
     public static final String SAVE_MESSAGE_INFO = "SAVE_MESSAGE_INFO";

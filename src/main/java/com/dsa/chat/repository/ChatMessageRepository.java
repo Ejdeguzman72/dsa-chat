@@ -1,11 +1,13 @@
 package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.ChatMessage;
+import com.dsa.chat.domain.ChatMessageDTO;
 
 import java.util.List;
 
 public interface ChatMessageRepository {
     List<ChatMessage> retrieveAllMessages();
+    List<ChatMessageDTO> retrieveChatMessageDtoList();
     List<ChatMessage> retrieveAllMessagesByUserId(long userId);
     ChatMessage retrieveChatMessageById(long chatMessageId);
     int addNewMessage(ChatMessage request);
