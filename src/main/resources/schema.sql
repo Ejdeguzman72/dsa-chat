@@ -61,6 +61,12 @@ CREATE TABLE IF NOT EXISTS public.dsa_event (
     event_date DATE NULL,
     event_type VARCHAR(255) NULL,
     description VARCHAR(255) NULL,
+    address01 VARCHAR(255) NULL,
+    address02 VARCHAR(255) NULL,
+    city VARCHAR(255) NULL,
+    state VARCHAR(2) NULL,
+    zipcode VARCHAR(255) NULL,
+    countryCode VARCHAR(255) NULL,
     create_time DATE NULL,
     last_updatetime DATE NULL
 );

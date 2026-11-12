@@ -17,12 +17,14 @@ public class DSAEvent {
     String eventType;
     String description;
     LocalDate eventDate;
+    String address01;
+    String address02;
+    String city;
+    String stateCode;
+    String zipCode;
+    String countryCode;
     LocalDate createTime;
     LocalDate lastUpdateTime;
-//    List<Long> attendees;
-//    List<Long> confirmedAttendees;
-//    List<Long> tentativeAttendees;
-//    List<Long> declinedAttendees;
 
     public UUID getEventId() {
         return eventId;
@@ -62,6 +64,54 @@ public class DSAEvent {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public String getAddress01() {
+        return address01;
+    }
+
+    public void setAddress01(String address01) {
+        this.address01 = address01;
+    }
+
+    public String getAddress02() {
+        return address02;
+    }
+
+    public void setAddress02(String address02) {
+        this.address02 = address02;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public LocalDate getCreateTime() {
