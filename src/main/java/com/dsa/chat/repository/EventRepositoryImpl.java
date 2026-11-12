@@ -2,6 +2,8 @@ package com.dsa.chat.repository;
 
 import com.dsa.chat.domain.DSAEvent;
 import com.dsa.chat.domain.EventMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +17,7 @@ import java.util.UUID;
 public class EventRepositoryImpl implements EventRepository {
     private final JdbcTemplate jdbcTemplate;
     private final EventMapper eventMapper;
+    private static final Logger LOGGER = LoggerFactory.getLogger(EventRepositoryImpl.class);
     @Autowired
     public EventRepositoryImpl(JdbcTemplate jdbcTemplate,EventMapper eventMapper) {
         this.jdbcTemplate = jdbcTemplate;
@@ -26,7 +29,7 @@ public class EventRepositoryImpl implements EventRepository {
     public static final String GET_EVENT_BY_ID = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_ID = ?";
     public static final String GET_EVENT_BY_NAME = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_NAME = ?";
     public static final String ADD_NEW_EVENT = "INSERT INTO DSA_EVENT (EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME) VALUES(?,?,?,?,?,?,?)";
-    public static final String UPDATE_EXISTING_EVENT = "UPDATE SDA_EVENT SET EVENT_NAME = ?,EVENT_TYPE=?,EVENT_DATE = ?,DESCRIPTION = ?,CREATE_DATETIME = ?,LAST_UPDATETIME = ? WHERE EVENT_ID = ?";
+    public static final String UPDATE_EXISTING_EVENT = "UPDATE DSA_EVENT SET EVENT_NAME = ?,EVENT_TYPE=?,EVENT_DATE = ?,DESCRIPTION = ?,CREATE_TIME = ?,LAST_UPDATETIME = ? WHERE EVENT_ID = ?";
     public static final String DELETE_EVENT = "DELETE FROM DSA_EVENT WHERE EVENT_ID = ?";
     public static final String GET_PAST_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE < CURRENT_DATE";
     public static final String GET_UPCOMING_EVENTS = "SELECT EVENT_ID,EVENT_NAME,EVENT_TYPE,EVENT_DATE,DESCRIPTION,CREATE_TIME,LAST_UPDATETIME FROM DSA_EVENT WHERE EVENT_DATE > CURRENT_DATE";
@@ -90,15 +93,57 @@ public class EventRepositoryImpl implements EventRepository {
 
     @Override
     public int updateEvent(DSAEvent request) {
-        int result = 0;
-        DSAEvent event = jdbcTemplate.queryForObject(GET_EVENT_BY_ID,eventMapper,request.getEventId());
-        if (event != null) {
-            event.setEventName(request.getEventName());
-            event.setEventType(request.getEventType());
-            event.setDescription(request.getDescription());
-            event.setEventDate(request.getEventDate());
-            event.setCreateTime(request.getCreateTime());
-            event.setLastUpdateTime(LocalDate.now());
+
+        if (request.getEventId() == null) {
+            throw new IllegalArgumentException(
+                    "Event ID is required for updating an event."
+            );
+        }
+
+        LOGGER.info(
+                "Updating event with ID: {}",
+                request.getEventId()
+        );
+
+        List<DSAEvent> events = jdbcTemplate.query(
+                GET_EVENT_BY_ID,
+                eventMapper,
+                request.getEventId()
+        );
+
+        if (events.isEmpty()) {
+            LOGGER.warn(
+                    "Event not found with ID: {}",
+                    request.getEventId()
+            );
+
+            return 0;
+        }
+
+        DSAEvent event = events.get(0);
+
+        event.setEventName(request.getEventName());
+        event.setEventType(request.getEventType());
+        event.setEventDate(request.getEventDate());
+        event.setDescription(request.getDescription());
+        event.setLastUpdateTime(LocalDate.now());
+
+        int result = jdbcTemplate.update(
+                UPDATE_EXISTING_EVENT,
+                event.getEventName(),
+                event.getEventType(),
+                event.getEventDate(),
+                event.getDescription(),
+                event.getCreateTime(),
+                event.getLastUpdateTime(),
+                event.getEventId()
+        );
+
+        if (result > 0) {
+            LOGGER.info(
+                    "Successfully updated event with ID: {}",
+                    event.getEventId()
+            );
         }
 
         return result;

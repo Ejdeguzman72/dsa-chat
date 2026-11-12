@@ -29,7 +29,7 @@ public class AnnouncementRepositoryImpl {
     public static final String RETRIEVE_ALL_ANNOUNCEMENTS = "SELECT ANNOUNCEMENT_ID, TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT";
     public static final String RETRIEVE_ANNOUNCEMENT_BY_ID = "SELECT ANNOUNCEMENT_ID, TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
     public static final String CREATE_ANNOUNCEMENT = "INSERT INTO ANNOUNCEMENT (TITLE, CONTENT, SENT_DATETIME, CREATE_DATETIME, LAST_UPDATEDATETIME) VALUES (?,?,?,?,?)";
-    public static final String UPDATE_ANNOUNCEMENT = "UPDATE ANNOUNCEMENT SET CONTENT = ? WHERE ANNOUNCEMENT_ID = ?";
+    public static final String UPDATE_ANNOUNCEMENT = "UPDATE ANNOUNCEMENT SET TITLE = ?, CONTENT = ?, LAST_UPDATEDATETIME = NOW() WHERE ANNOUNCEMENT_ID = ?";
     public static final String DELETE_ANNOUNCEMENT = "DELETE FROM ANNOUNCEMENT WHERE ANNOUNCEMENT_ID = ?";
 
     public List<Announcement> retrieveAllAnnouncements() {
@@ -65,8 +65,10 @@ public class AnnouncementRepositoryImpl {
     public int updateAnnouncement(Announcement announcement) {
         int result = 0;
         Announcement existingAnnouncement = retrieveAnnouncement(announcement.getAnnouncementId());
+        System.out.println(existingAnnouncement);
         if (existingAnnouncement != null) {
             Announcement request = new Announcement();
+            request.setAnnouncementId(announcement.getAnnouncementId());
             request.setTitle(announcement.getTitle());
             request.setContent(announcement.getContent());
             request.setSentDatetime(announcement.getSentDatetime());
@@ -74,7 +76,9 @@ public class AnnouncementRepositoryImpl {
             request.setUpdateDateTime(announcement.getUpdateDateTime());
 
             result = jdbcTemplate.update(UPDATE_ANNOUNCEMENT,new Object[] {
-                    request
+                    request.getTitle(),
+                    request.getContent(),
+                    request.getAnnouncementId()
             });
         }
 

@@ -91,6 +91,7 @@ public class EventService {
         int result = 0;
         if (request != null) {
             DSAEvent event = new DSAEvent();
+            event.setEventId(request.getEventId());
             event.setEventName(request.getEventName());
             event.setEventType(request.getEventType());
             event.setDescription(request.getDescription());

@@ -12,7 +12,6 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DSAEvent {
-
     UUID eventId;
     String eventName;
     String eventType;

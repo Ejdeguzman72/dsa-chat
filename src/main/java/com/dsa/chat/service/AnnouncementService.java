@@ -49,11 +49,12 @@ public class AnnouncementService {
         return response;
     }
 
-    public AnnouncementAddUpdateResponse updateAnnouncement(Announcement request) {
+    public AnnouncementAddUpdateResponse updateAnnouncement(AnnouncementAddUpdateRequest request) {
         AnnouncementAddUpdateResponse response = new AnnouncementAddUpdateResponse();
         int result = 0;
         if (request != null) {
             Announcement announcement = new Announcement();
+            announcement.setAnnouncementId(request.getAnnouncementId());
             announcement.setTitle(request.getTitle());
             announcement.setContent(request.getContent());
             announcement.setSentDatetime(LocalDateTime.now());
