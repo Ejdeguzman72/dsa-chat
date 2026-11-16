@@ -57,7 +57,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
         LOGGER.info("User connected: {}", username);
 
-        broadcastMessage(username + " is online");
+        // broadcastMessage(username + " is online");
     }
 
     @Override
@@ -68,6 +68,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String username = getUsername(session);
 
         if (username == null || username.isBlank()) {
+            LOGGER.info("user not present...");
             session.close(CloseStatus.POLICY_VIOLATION);
             return;
         }
@@ -75,12 +76,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String payload = message.getPayload().trim();
 
         if (payload.isEmpty()) {
+            LOGGER.info("message is empty...");
             return;
         }
 
-        // Retrieve user
-        UserSearchResponse user =
-                userService.retrieveUserByUsername(username);
+        UserSearchResponse user = userService.retrieveUserByUsername(username);
 
         if (user == null) {
             LOGGER.warn("User not found: {}", username);
@@ -119,7 +119,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
 
     private boolean isAiCommand(String payload) {
-
         return payload.regionMatches(
                 true, 0, "@AI", 0, 3)
                 && (payload.length() == 3
@@ -130,21 +129,17 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
         try {
             executorService.submit(() -> {
-
                 try {
                     LOGGER.info("Processing AI request from user: {}", username);
 
                     String aiResponse = aiChatService.askAI(question);
 
-                    if (aiResponse == null ||
-                            aiResponse.isBlank()) {
-
+                    if (aiResponse == null || aiResponse.isBlank()) {
                         sendToSession(session, "[DSA AI]: No response was generated.");
                         return;
                     }
 
                     String aiMessage = "[DSA AI]: " + aiResponse;
-
                     LOGGER.info("AI response generated for user: {}", username);
 
                     broadcastMessage(aiMessage);
@@ -187,7 +182,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
         boolean removed = sessions.remove(session);
-
         String username = getUsername(session);
 
         LOGGER.info("User disconnected: {}", username);
@@ -210,9 +204,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
 
     private void broadcastMessage(String message) {
-
         for (WebSocketSession client : sessions) {
-
             if (!client.isOpen()) {
                 sessions.remove(client);
                 continue;
