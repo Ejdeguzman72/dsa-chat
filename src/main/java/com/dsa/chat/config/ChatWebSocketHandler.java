@@ -57,7 +57,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 
         LOGGER.info("User connected: {}", username);
 
-        broadcastMessage(username + " joined the chat");
+        broadcastMessage(username + " is online");
     }
 
     @Override
@@ -193,7 +193,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         LOGGER.info("User disconnected: {}", username);
 
         if (removed && username != null) {
-            broadcastMessage(username + " left the chat");
+            broadcastMessage(username + " is now offline");
         }
     }
 
