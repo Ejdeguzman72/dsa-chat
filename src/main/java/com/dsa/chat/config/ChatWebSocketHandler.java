@@ -8,6 +8,7 @@ import com.dsa.chat.service.DsaUserService;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -29,14 +30,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final DsaUserService userService;
     private final AIChatService aiChatService;
     private final Set<WebSocketSession> sessions = ConcurrentHashMap.newKeySet();
-    private final ExecutorService executorService = Executors.newFixedThreadPool(4);
+    private final ExecutorService executorService;
     public ChatWebSocketHandler(
             ChatMessageService chatMessageService,
             DsaUserService userService,
-            AIChatService aiChatService) {
+            AIChatService aiChatService,
+            @Qualifier("chatExecutor") ExecutorService executorService) {
         this.chatMessageService = chatMessageService;
         this.userService = userService;
         this.aiChatService = aiChatService;
+        this.executorService = executorService;
     }
     private String getUsername(WebSocketSession session) {
         return (String) session.getAttributes().get("username");
